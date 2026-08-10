@@ -1,4 +1,4 @@
-requests>=2.28.0
+requests>=2.28.0,<3
 # That's it — the CLI (generate/parallel/full/synthesis/memory) never imports
 # flask or web_server.py at module level, so this is all it needs.
 #
