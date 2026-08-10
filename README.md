@@ -3,11 +3,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![CI](https://github.com/TFD-42/Wild_Root_Prompt/actions/workflows/ci.yml/badge.svg)](https://github.com/TFD-42/Wild_Root_Prompt/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/TFD-42/Wild_Root_Prompt/actions/workflows/codeql.yml/badge.svg)](https://github.com/TFD-42/Wild_Root_Prompt/actions/workflows/codeql.yml)
 [![Ollama](https://img.shields.io/badge/Ollama-compatible-green.svg)](https://ollama.com)
 [![LLM](https://img.shields.io/badge/LLM-Local%20AI-blueviolet.svg)](https://en.wikipedia.org/wiki/Large_language_model)
 [![Prompt Engineering](https://img.shields.io/badge/Prompt%20Engineering-173%20Techniques-orange.svg)](#prompt-engineering-techniques)
-[![Open Source](https://img.shields.io/badge/Open%20Source-MIT-success.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows%20%7C%20Android-informational.svg)](#install)
+[![HuggingFace Space](https://img.shields.io/badge/🤗%20HuggingFace-Space-yellow)](https://huggingface.co/spaces/Ellana42/wild-root-prompt)
+[![GitHub stars](https://img.shields.io/github/stars/TFD-42/Wild_Root_Prompt?style=social)](https://github.com/TFD-42/Wild_Root_Prompt/stargazers)
 
 **Transform any raw prompt into expert-level output using local LLMs via Ollama — no cloud API keys, no data sent to external servers.**
 
@@ -47,6 +49,8 @@ Wild_Root_Prompt enhances any prompt before it reaches your LLM. A **pre-process
 - **Synthesize** both outputs into a unified superior document
 - **Combine** multiple generations end-to-end via full pipeline
 - **Merge** insights from diverse reasoning styles (systematic vs. creative)
+
+> **Try it now** — a live demo runs at [huggingface.co/spaces/Ellana42/wild-root-prompt](https://huggingface.co/spaces/Ellana42/wild-root-prompt) with no install required.
 
 ---
 
@@ -420,6 +424,18 @@ All settings persist in `settings.json` (gitignored, local to each user):
 - **Comparative analysis** — Run two models in parallel and synthesize the best of both
 - **Reproducible AI workflows** — Manifests can be reused across models and platforms
 - **Learning prompt engineering** — Browse 173 techniques with descriptions and categories
+
+## Roadmap & Known Limitations
+
+**Current limitations:**
+- Web enrichment requires an internet connection (all other features are fully offline).
+- `--techniques all` is intentionally refused — stacking all 173 techniques degrades output quality. Use `--recommend-techniques`, a named bundle, or an explicit comma-separated list.
+- The compiled standalone app embeds the methodology JSON at build time; adding new techniques requires rebuilding the binary.
+
+**Planned:**
+- PyPI packaging (`pip install wildroot`) for easier distribution.
+- Second-pass LLM technique selection (opt-in): after the first-pass topic index selects a core set, an optional second pass would surface candidates from the `secondary` pool.
+- CHANGELOG retroactive entries for v2.0–v2.2.
 
 ## License
 
