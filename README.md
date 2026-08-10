@@ -12,7 +12,9 @@
 **Transform any raw prompt into expert-level output using local LLMs via Ollama — no cloud API keys, no data sent to external servers.**
 
 ## Platform Overview
-![Capture d’écran 2026-07-13 à 23 45 35](https://github.com/user-attachments/assets/dd919e34-f77a-45fb-8b47-4d009e62debc)
+
+
+![Capture d’écran 2026-08-10 à 18 47 52](https://github.com/user-attachments/assets/49a3aeed-b33e-41e0-bc8e-a1a3afbd2de8)
 
 
 Wild_Root_Prompt enhances any prompt before it reaches your LLM. A **pre-processor** first restructures and clarifies your raw input, then applies **173 prompt engineering techniques** across 15 categories (Chain-of-Thought, Tree-of-Thought, ReAct, MECE, red teaming, and more) to generate exhaustive, high-quality outputs. Novice users get a **local web UI** (one click); power users get a full **CLI** with parallel dual-model generation, split-screen streaming, and expert synthesis.
