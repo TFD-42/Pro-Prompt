@@ -54,6 +54,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional, Tuple, Dict
+from html.parser import HTMLParser
 from urllib.parse import quote_plus, urlparse
 
 import requests
@@ -935,6 +936,25 @@ WEB_CACHE_DIR = CACHE_DIR / "web"
 WEB_CACHE_TTL_SECONDS = 24 * 60 * 60  # 24h
 
 
+class _TextExtractor(HTMLParser):
+    """HTML-to-text extractor that skips <script> and <style> content."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self._skip = False
+        self._parts: List[str] = []
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self._skip = True
+    def handle_endtag(self, tag):
+        if tag in ("script", "style"):
+            self._skip = False
+    def handle_data(self, data):
+        if not self._skip:
+            self._parts.append(data)
+    def get_text(self) -> str:
+        return " ".join(self._parts)
+
+
 def _web_cache_path(kind: str, key: str) -> Path:
     h = hashlib.sha256(key.encode("utf-8")).hexdigest()
     return WEB_CACHE_DIR / f"{kind}_{h}.json"
@@ -1033,10 +1053,9 @@ def fetch_page_text(url: str, max_chars: int = 3000) -> str:
         if _SSRF_BLOCK.match(resp.url):
             return ""
         resp.raise_for_status()
-        text = re.sub(r"<script[^>]*>.*?</script>", "", resp.text, flags=re.DOTALL)
-        text = re.sub(r"<style[^>]*>.*?</style>", "", text, flags=re.DOTALL)
-        text = re.sub(r"<[^>]+>", " ", text)
-        text = re.sub(r"\s+", " ", text).strip()
+        extractor = _TextExtractor()
+        extractor.feed(resp.text)
+        text = re.sub(r"\s+", " ", extractor.get_text()).strip()
         result = text[:max_chars]
         if result:
             _web_cache_set("page", cache_key, result)

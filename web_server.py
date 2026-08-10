@@ -39,6 +39,7 @@ app.config["SECRET_KEY"] = __import__("secrets").token_hex(32)  # random per-run
 # Suppress Werkzeug request logs — no IPs, no paths printed to terminal
 import logging as _logging
 _logging.getLogger("werkzeug").setLevel(_logging.ERROR)
+_log = _logging.getLogger("wildroot.web")
 
 # ── Embedded HTML ────────────────────────────────────────────────────────────
 
@@ -926,7 +927,8 @@ def api_models():
         models = list_local_models()
         return jsonify({"models": models})
     except Exception as e:
-        return jsonify({"models": [], "error": str(e)})
+        _log.error("api_models: %s", e)
+        return jsonify({"models": [], "error": "Failed to list models."})
 
 
 @app.route("/api/templates")
@@ -938,7 +940,8 @@ def api_templates():
         ]
         return jsonify({"templates": templates})
     except Exception as e:
-        return jsonify({"templates": [], "error": str(e)})
+        _log.error("api_templates: %s", e)
+        return jsonify({"templates": [], "error": "Failed to load templates."})
 
 
 @app.route("/api/preprocess", methods=["POST"])
