@@ -185,9 +185,10 @@ TECHNIQUES_DB: Dict[int, Dict[str, str]] = {}
 CATEGORIES_DB: List[Dict] = []
 ANTI_PATTERNS: List[Dict] = []
 QUICK_REFERENCE: Dict[str, List[int]] = {}
+TOPIC_INDEX: List[Dict] = []
 
 def load_methodologies():
-    global TECHNIQUES_DB, CATEGORIES_DB, ANTI_PATTERNS, QUICK_REFERENCE
+    global TECHNIQUES_DB, CATEGORIES_DB, ANTI_PATTERNS, QUICK_REFERENCE, TOPIC_INDEX
     if not METHODOLOGY_FILE.exists():
         return
     try:
@@ -204,6 +205,7 @@ def load_methodologies():
                     }
             ANTI_PATTERNS = data.get("anti_patterns", [])
             QUICK_REFERENCE = data.get("quick_reference", {}).get("mappings", {})
+            TOPIC_INDEX = data.get("topic_index", [])
         else:
             for line in raw.strip().split("\n"):
                 if line and line[0].isdigit():
@@ -2016,6 +2018,11 @@ def parse_techniques(techniques_raw: str) -> List[int]:
         return sorted(set(bundle))
     if techniques_raw.lower() == "random" or techniques_raw.lower().startswith("random:"):
         return _random_technique_subset(techniques_raw.lower())
+    if techniques_raw.lower() == "all":
+        logger.warning("'all' would stack every technique on one prompt, which degrades output — "
+                       "techniques are meant to be selected per task (see --recommend-techniques, "
+                       "'bundle:<name-or-#>', or an explicit range). Using the default set.")
+        return sorted(DEFAULT_TECHNIQUES)
     result = []
     for part in techniques_raw.split(","):
         part = part.strip()
@@ -2031,7 +2038,11 @@ def parse_techniques(techniques_raw: str) -> List[int]:
                 result.append(int(part))
             except ValueError:
                 logger.warning(f"Invalid technique ID: {part}")
-    return sorted(set(result))
+    ids = sorted(set(result))
+    if not ids:
+        logger.warning(f"No valid technique IDs in '{techniques_raw}' — using the default set.")
+        return sorted(DEFAULT_TECHNIQUES)
+    return ids
 
 
 def common_args(parser: argparse.ArgumentParser):
@@ -2041,8 +2052,9 @@ def common_args(parser: argparse.ArgumentParser):
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT, help="Timeout per Ollama call in seconds")
     parser.add_argument("--no-memory", action="store_true", default=False, help="Disable session memory context")
     parser.add_argument("--techniques", default="",
-                        help="Technique IDs: 1,5,8 or range 1-20 or 'all'. Also accepts 'bundle:<name-or-#>' "
-                             "for a task-type bundle, or 'random'/'random:N' for a random subset.")
+                        help="Technique IDs: 1,5,8 or range 1-20. Also accepts 'bundle:<name-or-#>' "
+                             "for a task-type bundle, or 'random'/'random:N' for a random subset. "
+                             "Techniques work best selected per task — prefer --recommend-techniques or a bundle.")
     parser.add_argument("--mode", choices=["quick", "full"], default="full",
                         help="quick = single enhanced prompt; full = 12-section manifest (default: full)")
     parser.add_argument("--list-techniques", action="store_true", help="List all 173 prompt engineering techniques")
@@ -2267,7 +2279,9 @@ def main():
 
     if getattr(args, "recommend_techniques", False) and getattr(args, "task", ""):
         techniques = recommend_techniques(args.task)
-        print(f"[techniques] auto-recommended: {','.join(str(t) for t in techniques)}")
+        matched = match_topic(args.task)
+        origin = f" (topic: {matched['label']})" if matched is not None else ""
+        print(f"[techniques] auto-recommended{origin}: {','.join(str(t) for t in techniques)}")
 
     try:
         if args.command == "generate":
@@ -2640,7 +2654,7 @@ _PII_STRUCTURED_PATTERNS: List[Tuple[str, "re.Pattern"]] = [
     ("IPV4", re.compile(r"\b(?!127\.|0\.0\.0\.0|10\.|172\.(?:1[6-9]|2\d|3[01])\.|192\.168\.)(?:\d{1,3}\.){3}\d{1,3}\b")),
     ("MAC_ADDRESS", re.compile(r"\b(?:[0-9A-Fa-f]{2}[:\-]){5}[0-9A-Fa-f]{2}\b")),
     ("SSN", re.compile(r"\b\d{3}-\d{2}-\d{4}\b")),
-    ("PHONE", re.compile(r"(?<!\d)(?:\+\d{1,3}[\s.\-]?)?(?:\(\d{2,4}\)[\s.\-]?)?\d{3}[\s.\-]\d{3,4}[\s.\-]?\d{0,4}(?!\d)")),
+    ("PHONE", re.compile(r"(?<!\d)(?<!\d\.)(?:\+\d{1,3}[\s.\-]?)?(?:\(\d{2,4}\)[\s.\-]?)?\d{3}[\s.\-]\d{3,4}[\s.\-]?\d{0,4}(?!\d)(?!\.\d)")),
     ("CREDIT_CARD", re.compile(r"\b(?:\d[ \-]?){13,19}\b")),
 ]
 
@@ -2883,11 +2897,33 @@ _TECHNIQUE_RECOMMENDATION_TRIGGERS: Dict[str, set] = {
 }
 
 
+def match_topic(text: str) -> Optional[Dict]:
+    """First-pass topic matching against topic_index triggers. Returns the
+    best-scoring topic entry, or None when the index is absent or no trigger
+    fires. Ties resolve to catalogue order so the result is deterministic."""
+    if not TOPIC_INDEX or not text or not text.strip():
+        return None
+    low = text.lower()
+    best: Optional[Dict] = None
+    best_score = 0
+    for topic in TOPIC_INDEX:
+        hits = sum(1 for trigger in topic.get("triggers", []) if trigger in low)
+        if hits > best_score:
+            best, best_score = topic, hits
+    return best
+
+
 def recommend_techniques(text: str, max_techniques: int = 8) -> List[int]:
-    """Heuristic technique recommendation — no ML dependency. Scores each
-    QUICK_REFERENCE task-type bucket by keyword overlap with the input, then
-    returns technique IDs from the best-matching bucket(s), highest first.
+    """Per-task technique selection — no ML dependency. First pass: match the
+    text against the topic_index and return the matched topic's core set
+    (5-8 mutually coherent techniques). Legacy fallback when the index is
+    absent or silent: score QUICK_REFERENCE buckets by keyword overlap.
     Falls back to DEFAULT_TECHNIQUES when nothing matches."""
+    topic = match_topic(text)
+    if topic is not None:
+        core = sorted({tid for tid in topic.get("core", []) if tid in TECHNIQUES_DB})
+        if core:
+            return core
     if not QUICK_REFERENCE or not text or not text.strip():
         return list(DEFAULT_TECHNIQUES)
     low = text.lower()
@@ -3103,10 +3139,9 @@ def collect_input(settings: dict) -> Tuple[str, str, str]:
     if injection_labels:
         print(f"  [warning] Input resembles a prompt-injection/jailbreak attempt ({', '.join(injection_labels)}). Proceeding — advisory only.")
 
-    if methods_raw.strip().lower() == "auto":
-        recommended = recommend_techniques(full_task)
-        settings["techniques"] = recommended
-        print(f"  [auto-selected techniques] {','.join(str(t) for t in recommended)}")
+    auto_techniques = methods_raw.strip().lower() == "auto"
+    if auto_techniques:
+        print("  [techniques] auto-selection will run after the pre-processor, on the enriched text")
 
     if methods_raw.strip().lower() in ("research", "deep-research", "deepresearch"):
         deep_context = run_deep_research(full_task)
@@ -3192,6 +3227,12 @@ def collect_input(settings: dict) -> Tuple[str, str, str]:
             full_task = restructured or full_task
     # ── end STEP 5 ──────────────────────────────────────────────────────────
 
+    if auto_techniques:
+        recommended = recommend_techniques(full_task)
+        settings["techniques"] = recommended
+        matched = match_topic(full_task)
+        origin = f" (topic: {matched['label']})" if matched is not None else ""
+        print(f"  [auto-selected techniques{origin}] {','.join(str(t) for t in recommended)}")
     return full_task.strip(), topics_raw, chosen_model
 
 
@@ -3396,7 +3437,6 @@ def menu_configure_techniques(settings: dict):
     print("    1,5,8,10,25     ->  specific techniques")
     print("    1-20             ->  range")
     print("    1-10,25,40-50    ->  combination")
-    print(f"    all              ->  all ({total} techniques)")
     print("    default          ->  default set")
     print("    random           ->  random subset (creative exploration)")
     print("    random:N         ->  random subset of exactly N techniques")
@@ -3409,9 +3449,7 @@ def menu_configure_techniques(settings: dict):
     raw = input("  Techniques: ").strip()
     if not raw:
         return
-    if raw.lower() == "all":
-        settings["techniques"] = sorted(TECHNIQUES_DB.keys())
-    elif raw.lower() == "default":
+    if raw.lower() == "default":
         settings["techniques"] = list(DEFAULT_TECHNIQUES)
     else:
         settings["techniques"] = parse_techniques(raw)
