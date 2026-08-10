@@ -1,7 +1,8 @@
-# Wild_Root_Prompt — Local LLM Prompt Enhancement Tool v2.3
+# Wild_Root_Prompt — Local LLM Prompt Enhancement Tool v2.4
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![CI](https://github.com/TFD-42/Wild_Root_Prompt/actions/workflows/ci.yml/badge.svg)](https://github.com/TFD-42/Wild_Root_Prompt/actions/workflows/ci.yml)
 [![Ollama](https://img.shields.io/badge/Ollama-compatible-green.svg)](https://ollama.com)
 [![LLM](https://img.shields.io/badge/LLM-Local%20AI-blueviolet.svg)](https://en.wikipedia.org/wiki/Large_language_model)
 [![Prompt Engineering](https://img.shields.io/badge/Prompt%20Engineering-173%20Techniques-orange.svg)](#prompt-engineering-techniques)
@@ -55,7 +56,8 @@ Wild_Root_Prompt enhances any prompt before it reaches your LLM. A **pre-process
 | **Local web UI** | One-click browser interface at `http://localhost:7860` — novice-friendly, no CLI needed |
 | **Interactive CLI** | Numbered menu, no flags to memorize |
 | **Two output modes** | **Quick**: single enhanced prompt ready to paste · **Full**: exhaustive 12-section manifest |
-| **173 prompt engineering techniques** | Organized in 15 categories with anti-patterns and quick-reference matrix |
+| **173 prompt engineering techniques** | Organized in 15 categories with anti-patterns, quick-reference matrix, and **25-topic auto-index** |
+| **Smart technique auto-selection** | `--recommend-techniques` matches your task to one of 25 topics (all 173 techniques reachable, bilingual EN/FR) |
 | **60 /slash metacommands** | Inline modifiers: persona, format, depth, reasoning, quality, context |
 | **Single model generation** | Real-time token streaming in terminal or browser |
 | **Parallel dual-model generation** | Split-screen display with two columns, live tokens |
@@ -275,10 +277,15 @@ Step-by-step reasoning, forced reframing, anti-lazy preamble, recursive deepenin
 ### Selecting Techniques
 
 ```bash
---techniques "1,5,8,10,25"     # Specific IDs
---techniques "1-30"             # Range
---techniques "1-173"            # All 173 techniques
+--techniques "1,5,8,10,25"           # Specific IDs
+--techniques "1-30"                   # Range
+--techniques "1-173"                  # All 173 (explicit full range)
+--techniques "bundle:code-generation" # Named task bundle
+--techniques "bundle:3"               # Bundle by number
+--recommend-techniques                # Auto-select based on your task (recommended)
 ```
+
+**Auto-selection (`--recommend-techniques`)** matches your task text against a 25-topic index covering all 173 techniques, then loads the 6 most coherent techniques for that topic. Topics include: `debugging-troubleshooting`, `creative-exploration`, `security-audit`, `teach-explain`, `structured-output-api`, `critical-decision`, and 19 more — in English and French.
 
 In the interactive menu, use option `6` to configure or option `7` to browse (grouped by category with anti-patterns and quick reference).
 
@@ -315,18 +322,28 @@ Generated manifests follow a **12-section structure**:
 
 ```
 Wild_Root_Prompt/
-  prompt_expert_enhance.py        # Main application — CLI + pre-processor (~2200 lines)
+  prompt_expert_enhance.py        # Main application — CLI + pre-processor + topic index
   web_server.py                   # Local web UI server (Flask, SSE streaming)
-  prompt_expert_methodology.json  # 173 prompt engineering techniques (15 categories)
-  requirements.txt                # Python deps: requests, flask
+  prompt_expert_methodology.json  # 173 techniques, 15 categories, 25-topic index, bundles
+  prompt_templates.json           # 10 starter task templates
+  requirements.txt                # Full deps (requests, flask, cryptography)
+  requirements-light.txt          # Minimal headless CLI deps (requests only)
+  requirements-build.txt          # Build deps (pyinstaller)
   install.sh                      # Installer — macOS / Linux
   install.ps1                     # Installer — Windows
   install_termux.sh               # Installer — Android / Termux
-  WildRoot.command              # macOS double-click launcher (web UI)
-  WildRoot.bat                  # Windows launcher (created by install.ps1)
-  WildRoot                      # Linux/macOS terminal launcher (created by install.sh)
+  WildRoot.command                # macOS double-click launcher (web UI)
+  WildRoot.bat                    # Windows launcher (created by install.ps1)
+  WildRoot                        # Linux/macOS terminal launcher (created by install.sh)
+  build_app.py                    # Compile to standalone single-icon app (PyInstaller)
+  tests/
+    test_core.py                  # 89 unit tests — stdlib only, no network, <0.1s
   tools/
-    privacy_scan.py               # PII scanner — run before every push
+    privacy_scan.py               # PII scanner — CI gate, run before every push
+    batch_test.py                 # Batch evaluation helper
+  .github/workflows/
+    ci.yml                        # CI: Python 3.8-3.13, tests + PII scan on every push/PR
+    release.yml                   # Release: compile macOS/Linux/Windows on tag push
   .gitignore
   README.md
   LICENSE
@@ -420,8 +437,12 @@ All settings persist in `settings.json` (gitignored, local to each user):
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/my-enhancement`)
-3. Run `python3 -m py_compile prompt_expert_enhance.py` before committing
-4. Push to your fork and open a pull request
+3. Run the test suite and privacy scan before committing:
+   ```bash
+   python3 -m unittest discover -s tests -v
+   python3 tools/privacy_scan.py
+   ```
+4. Push to your fork and open a pull request — the CI workflow will run automatically on Python 3.8–3.13
 
 **Keep these files out of commits** (already in `.gitignore`):
 - `settings.json` — Local user settings

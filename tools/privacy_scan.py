@@ -118,6 +118,13 @@ ALLOWLIST = [
     "user@example",
     "ManifestGen",           # our own generic UA
     "# noqa: privacy",       # explicit opt-out comment
+    # RFC 5737 TEST-NET documentation ranges — safe in test fixtures
+    "203.0.113.",
+    "198.51.100.",
+    "192.0.2.",
+    # Common placeholder MAC in test vectors (IANA OUI unallocated range)
+    "00:1A:2B:3C:4D:5E",
+    "00:1a:2b:3c:4d:5e",
 ]
 
 
