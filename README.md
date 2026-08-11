@@ -14,6 +14,8 @@
 
 **Transform any raw prompt into expert-level output using local LLMs via Ollama — no cloud API keys, no data sent to external servers.**
 
+> ⚡ **[Try the live demo →](https://wild-root-prompt.onrender.com)** — full tool, no install · or [browse the technique catalog](https://huggingface.co/spaces/Ellana42/wild-root-prompt) on HuggingFace
+
 ## Platform Overview
 
 
@@ -75,6 +77,7 @@ Wild_Root_Prompt enhances any prompt before it reaches your LLM. A **pre-process
 | **First-run guidance** | If no models installed, offers guided pull with RAM requirements |
 | **One-click launchers** | `WildRoot.command` (macOS) · `WildRoot.bat` (Windows) · `WildRoot` (Linux) |
 | **Cross-platform install** | `install.sh` (macOS/Linux) · `install.ps1` (Windows) · `install_termux.sh` (Android) |
+| **Privacy-first by default** | Built-in PII anonymization strips emails, IPs, phone numbers and MAC addresses before any prompt is processed. SSRF-protected web enrichment. CodeQL-scanned codebase. No telemetry. |
 | **Zero-trust security** | Input sanitization, SSRF block, no PII in logs, random session key |
 | **Session memory** | Tracks past runs for cross-session coherence |
 | **Persistent settings** | Models, techniques, temperature, output mode, pre-processor saved locally |
