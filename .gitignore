@@ -58,6 +58,7 @@ tools/test_batch*.json
 # Secrets / credentials
 .env
 .env.*
+!.env.example
 *.key
 *.pem
 credentials*

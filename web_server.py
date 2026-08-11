@@ -30,6 +30,7 @@ from prompt_expert_enhance import (
     load_settings, save_settings, PRE_PROCESSOR_TIMEOUT,
     is_ollama_running, ensure_ollama_ready,
     set_backend_type, set_backend_api_base,
+    _CLOUD_MODE, _HF_INFERENCE_URL,
     PROMPT_TEMPLATES,
 )
 
@@ -458,7 +459,9 @@ async function checkOllama() {
     const r = await fetch('/api/status')
     const d = await r.json()
     $('ollama-dot').className = 'dot ' + (d.ollama ? 'green' : 'red')
-    $('ollama-status').textContent = d.ollama ? 'Ollama running — ready' : 'Ollama not running — start it first'
+    $('ollama-status').textContent = d.ollama
+      ? (d.cloud ? 'HF Inference API — ready' : 'Ollama running — ready')
+      : 'Ollama not running — start it first'
   } catch { $('ollama-dot').className = 'dot red'; $('ollama-status').textContent = 'Server error' }
 }
 
@@ -918,7 +921,7 @@ def index():
 
 @app.route("/api/status")
 def api_status():
-    return jsonify({"ollama": is_ollama_running()})
+    return jsonify({"ollama": is_ollama_running(), "cloud": _CLOUD_MODE})
 
 
 @app.route("/api/models")
@@ -1096,8 +1099,12 @@ def api_synthesize():
 
 def run_web_server(port: int = 7860, open_browser: bool = True):
     startup_settings = load_settings()
-    set_backend_type(startup_settings.get("backend_type", "ollama"))
-    set_backend_api_base(startup_settings.get("ollama_url", OLLAMA_URL))
+    if _CLOUD_MODE:
+        set_backend_type("openai_compatible")
+        set_backend_api_base(_HF_INFERENCE_URL)
+    else:
+        set_backend_type(startup_settings.get("backend_type", "ollama"))
+        set_backend_api_base(startup_settings.get("ollama_url", OLLAMA_URL))
 
     print(f"\n  Wild_Root_Prompt Web UI")
     print(f"  ─────────────────────────────────────")
