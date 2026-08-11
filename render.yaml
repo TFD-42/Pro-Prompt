@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: wild-root-prompt
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python prompt_expert_enhance.py web --port $PORT --no-browser
+    envVars:
+      - key: HF_TOKEN
+        sync: false        # set this in Render dashboard — never commit the value
+      - key: HF_DEFAULT_MODEL
+        value: Qwen/Qwen2.5-72B-Instruct
+    healthCheckPath: /api/status

@@ -65,6 +65,13 @@ import requests
 OLLAMA_URL = "http://localhost:11434/api/generate"
 BASE_DIR = Path(__file__).resolve().parent
 
+# Cloud deploy: set HF_TOKEN env var to switch to HF Inference API backend.
+# All Ollama checks are skipped automatically when this is set.
+_HF_TOKEN: str = os.environ.get("HF_TOKEN", "")
+_CLOUD_MODE: bool = bool(_HF_TOKEN)
+_HF_INFERENCE_URL = "https://api-inference.huggingface.co/v1/chat/completions"
+_HF_DEFAULT_MODEL = os.environ.get("HF_DEFAULT_MODEL", "Qwen/Qwen2.5-72B-Instruct")
+
 
 def _is_frozen() -> bool:
     """True when running inside a PyInstaller-compiled app, not from source."""
@@ -324,6 +331,8 @@ def is_ollama_installed() -> bool:
 
 
 def is_ollama_running() -> bool:
+    if _CLOUD_MODE:
+        return True
     try:
         requests.get(f"{OLLAMA_API_BASE}/api/tags", timeout=3)
         return True
@@ -439,7 +448,20 @@ def start_ollama_serve():
         print(f"  [!] Could not start Ollama: {e}")
 
 
+_HF_AVAILABLE_MODELS = [
+    "Qwen/Qwen2.5-72B-Instruct",
+    "Qwen/Qwen2.5-Coder-32B-Instruct",
+    "meta-llama/Llama-3.3-70B-Instruct",
+    "mistralai/Mistral-7B-Instruct-v0.3",
+    "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    "google/gemma-3-27b-it",
+    "microsoft/Phi-4-reasoning",
+]
+
+
 def list_local_models() -> List[Dict[str, str]]:
+    if _CLOUD_MODE:
+        return [{"name": m, "size": "cloud", "modified": ""} for m in _HF_AVAILABLE_MODELS]
     base = _BACKEND_API_BASE or OLLAMA_API_BASE
     if _BACKEND_TYPE == "openai_compatible":
         try:
@@ -554,6 +576,8 @@ def pick_model_interactive(label: str, current: str) -> str:
 
 
 def ensure_ollama_ready():
+    if _CLOUD_MODE:
+        return
     if not is_ollama_installed():
         if not install_ollama_interactive():
             print("\n  [!] Ollama is not available. Generation will fail.")
@@ -1283,8 +1307,9 @@ def query_ollama(
     if _BACKEND_TYPE == "openai_compatible":
         is_chat = _is_chat_endpoint(ollama_url)
         payload = _openai_compatible_payload(model, prompt, temperature, num_predict, ollama_url, stream=False)
+        headers = {"Authorization": f"Bearer {_HF_TOKEN}"} if _HF_TOKEN else {}
         try:
-            resp = requests.post(ollama_url, json=payload, timeout=timeout)
+            resp = requests.post(ollama_url, json=payload, headers=headers, timeout=timeout)
             resp.raise_for_status()
             data = resp.json()
             result = _openai_compatible_extract_text(data["choices"][0], is_chat) or "[Empty response]"
@@ -1353,9 +1378,10 @@ def query_ollama_stream(
     if _BACKEND_TYPE == "openai_compatible":
         is_chat = _is_chat_endpoint(ollama_url)
         payload = _openai_compatible_payload(model, prompt, temperature, num_predict, ollama_url, stream=True)
+        headers = {"Authorization": f"Bearer {_HF_TOKEN}"} if _HF_TOKEN else {}
         full_text = []
         try:
-            with requests.post(ollama_url, json=payload, timeout=timeout, stream=True) as resp:
+            with requests.post(ollama_url, json=payload, headers=headers, timeout=timeout, stream=True) as resp:
                 resp.raise_for_status()
                 for raw_line in resp.iter_lines():
                     if not raw_line:
