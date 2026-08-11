@@ -251,7 +251,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="logo">Wild_Root<span>_Prompt</span></div>
-    <div class="tagline">Local AI Prompt Enhancement &nbsp;·&nbsp; v2.3</div>
+    <div class="tagline">Local AI Prompt Enhancement &nbsp;·&nbsp; v2.4</div>
   </div>
 
   <div class="sidebar-body">
