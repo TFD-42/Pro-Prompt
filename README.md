@@ -8,7 +8,8 @@
 [![LLM](https://img.shields.io/badge/LLM-Local%20AI-blueviolet.svg)](https://en.wikipedia.org/wiki/Large_language_model)
 [![Prompt Engineering](https://img.shields.io/badge/Prompt%20Engineering-173%20Techniques-orange.svg)](#prompt-engineering-techniques)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows%20%7C%20Android-informational.svg)](#install)
-[![HuggingFace Space](https://img.shields.io/badge/🤗%20HuggingFace-Space-yellow)](https://huggingface.co/spaces/Ellana42/wild-root-prompt)
+[![HuggingFace Space](https://img.shields.io/badge/🤗%20HuggingFace-Catalog-yellow)](https://huggingface.co/spaces/Ellana42/wild-root-prompt)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-46E3B7?logo=render)](https://wild-root-prompt.onrender.com)
 [![GitHub stars](https://img.shields.io/github/stars/TFD-42/Wild_Root_Prompt?style=social)](https://github.com/TFD-42/Wild_Root_Prompt/stargazers)
 
 **Transform any raw prompt into expert-level output using local LLMs via Ollama — no cloud API keys, no data sent to external servers.**
@@ -50,7 +51,7 @@ Wild_Root_Prompt enhances any prompt before it reaches your LLM. A **pre-process
 - **Combine** multiple generations end-to-end via full pipeline
 - **Merge** insights from diverse reasoning styles (systematic vs. creative)
 
-> **Try it now** — a live demo runs at [huggingface.co/spaces/Ellana42/wild-root-prompt](https://huggingface.co/spaces/Ellana42/wild-root-prompt) with no install required.
+> **Try it now** — the full tool runs live at [wild-root-prompt.onrender.com](https://wild-root-prompt.onrender.com) (no install, powered by HF Inference API). Browse the technique catalog on the [HuggingFace Space](https://huggingface.co/spaces/Ellana42/wild-root-prompt).
 
 ---
 
