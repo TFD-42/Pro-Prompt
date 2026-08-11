@@ -68,7 +68,7 @@ BASE_DIR = Path(__file__).resolve().parent
 # Cloud deploy: set HF_TOKEN env var to switch to HF Inference API backend.
 # All Ollama checks are skipped automatically when this is set.
 _HF_TOKEN: str = os.environ.get("HF_TOKEN", "")
-_CLOUD_MODE: bool = bool(_HF_TOKEN)
+_CLOUD_MODE: bool = bool(_HF_TOKEN) or bool(os.environ.get("RENDER"))
 _HF_INFERENCE_URL = "https://api-inference.huggingface.co/v1/chat/completions"
 _HF_DEFAULT_MODEL = os.environ.get("HF_DEFAULT_MODEL", "Qwen/Qwen2.5-72B-Instruct")
 
