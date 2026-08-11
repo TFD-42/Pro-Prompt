@@ -1167,7 +1167,8 @@ def run_web_server(port: int = 7860, open_browser: bool = True):
         threading.Thread(target=_open, daemon=True).start()
 
     try:
-        app.run(host="127.0.0.1", port=port, debug=False, threaded=True, use_reloader=False)
+        host = "0.0.0.0" if _CLOUD_MODE else "127.0.0.1"
+        app.run(host=host, port=port, debug=False, threaded=True, use_reloader=False)
     except OSError as e:
         print(f"\n  [ERROR] Could not start server on port {port}: {e}")
         print(f"  Try:  python prompt_expert_enhance.py web --port 7861")
