@@ -7,12 +7,36 @@
       "name": "Methodes de cadrage (Framing)",
       "description": "Techniques de calibration par l'exemple ou l'absence d'exemple.",
       "techniques": [
-        {"id": 101, "title": "Zero-shot", "description": "Instruction nue sans contexte ni exemple. Usage: taches simples, test de capacite baseline, generation rapide."},
-        {"id": 102, "title": "One-shot", "description": "Un seul exemple pour calibrer le format et le ton attendu. Permet d'ancrer la structure sans surcharger le contexte."},
-        {"id": 103, "title": "Few-shot", "description": "2 a 6 exemples pour injecter un pattern implicite. Choisir des exemples couvrant les cas limites, pas les cas centraux."},
-        {"id": 104, "title": "Many-shot", "description": "10 a 100+ exemples pour aligner le style sur un corpus prive ou forcer une distribution de sortie tres specifique. Attention a la degradation d'attention sur les exemples medians."},
-        {"id": 105, "title": "Negative-shot", "description": "Montrer ce qu'il ne faut PAS faire avant de montrer ce qu'il faut faire. Calibre par le contre-exemple."},
-        {"id": 106, "title": "Contrastive prompting", "description": "Paire minimale: deux exemples qui different sur un seul critere pour isoler la variable de controle."}
+        {
+          "id": 101,
+          "title": "Zero-shot",
+          "description": "Instruction nue sans contexte ni exemple. Usage: taches simples, test de capacite baseline, generation rapide."
+        },
+        {
+          "id": 102,
+          "title": "One-shot",
+          "description": "Un seul exemple pour calibrer le format et le ton attendu. Permet d'ancrer la structure sans surcharger le contexte."
+        },
+        {
+          "id": 103,
+          "title": "Few-shot",
+          "description": "2 a 6 exemples pour injecter un pattern implicite. Choisir des exemples couvrant les cas limites, pas les cas centraux."
+        },
+        {
+          "id": 104,
+          "title": "Many-shot",
+          "description": "10 a 100+ exemples pour aligner le style sur un corpus prive ou forcer une distribution de sortie tres specifique. Attention a la degradation d'attention sur les exemples medians."
+        },
+        {
+          "id": 105,
+          "title": "Negative-shot",
+          "description": "Montrer ce qu'il ne faut PAS faire avant de montrer ce qu'il faut faire. Calibre par le contre-exemple."
+        },
+        {
+          "id": 106,
+          "title": "Contrastive prompting",
+          "description": "Paire minimale: deux exemples qui different sur un seul critere pour isoler la variable de controle."
+        }
       ]
     },
     {
@@ -20,16 +44,56 @@
       "name": "Methodes orientees (Directed)",
       "description": "Techniques de raisonnement structure et dirige.",
       "techniques": [
-        {"id": 1, "title": "Step-by-step instruction", "description": "Explicitly ask the model to think step by step before answering. Forces internal reasoning and prevents premature conclusions."},
-        {"id": 3, "title": "Chain-of-thought (CoT) priming", "description": "Provide a partial reasoning example, then ask the model to continue. Guarantees a fully articulated logic path."},
-        {"id": 100, "title": "Zero-shot CoT with self-reminder", "description": "Write 'I will now produce a complete, exhaustive answer. No shortcuts.' then proceed. Reinforces the goal directly."},
-        {"id": 107, "title": "Self-consistency", "description": "Generer N completions independantes puis voter ou agglomerer. Simulable: demander 5 reponses independantes puis identifier la plus robuste."},
-        {"id": 108, "title": "Tree of Thought (ToT)", "description": "Explorer plusieurs branches de raisonnement en parallele, evaluer chaque branche, backtracker. Demander 3 approches, scorer chacune, developper la meilleure."},
-        {"id": 109, "title": "Graph of Thought (GoT)", "description": "Raisonnement non lineaire avec dependances croisees entre pensees. Identifier les noeuds cles, definir les dependances, traverser le graphe de facon optimale."},
-        {"id": 110, "title": "Program of Thought (PoT)", "description": "Deleguer le calcul au code plutot qu'au LLM. Le LLM ecrit le code, le code produit la reponse. Utile pour arithmetique, statistiques, manipulation de donnees."},
-        {"id": 111, "title": "ReAct (Reasoning + Acting)", "description": "Intercaler Thought / Action / Observation en boucle. Pattern fondamental des agents. Repete jusqu'a conclusion puis Final Answer."},
-        {"id": 112, "title": "Skeleton-of-Thought (SoT)", "description": "Generer d'abord un squelette (outline), puis remplir chaque partie. Reduit la latence et ameliore la coherence structurelle."},
-        {"id": 113, "title": "Least-to-most prompting", "description": "Decomposer un probleme complexe en sous-problemes du plus simple au plus complexe, resoudre chacun sequentiellement en construisant sur les solutions precedentes."}
+        {
+          "id": 1,
+          "title": "Step-by-step instruction",
+          "description": "Explicitly ask the model to think step by step before answering. Forces internal reasoning and prevents premature conclusions."
+        },
+        {
+          "id": 3,
+          "title": "Chain-of-thought (CoT) priming",
+          "description": "Provide a partial reasoning example, then ask the model to continue. Guarantees a fully articulated logic path."
+        },
+        {
+          "id": 100,
+          "title": "Zero-shot CoT with self-reminder",
+          "description": "Write 'I will now produce a complete, exhaustive answer. No shortcuts.' then proceed. Reinforces the goal directly."
+        },
+        {
+          "id": 107,
+          "title": "Self-consistency",
+          "description": "Generer N completions independantes puis voter ou agglomerer. Simulable: demander 5 reponses independantes puis identifier la plus robuste."
+        },
+        {
+          "id": 108,
+          "title": "Tree of Thought (ToT)",
+          "description": "Explorer plusieurs branches de raisonnement en parallele, evaluer chaque branche, backtracker. Demander 3 approches, scorer chacune, developper la meilleure."
+        },
+        {
+          "id": 109,
+          "title": "Graph of Thought (GoT)",
+          "description": "Raisonnement non lineaire avec dependances croisees entre pensees. Identifier les noeuds cles, definir les dependances, traverser le graphe de facon optimale."
+        },
+        {
+          "id": 110,
+          "title": "Program of Thought (PoT)",
+          "description": "Deleguer le calcul au code plutot qu'au LLM. Le LLM ecrit le code, le code produit la reponse. Utile pour arithmetique, statistiques, manipulation de donnees."
+        },
+        {
+          "id": 111,
+          "title": "ReAct (Reasoning + Acting)",
+          "description": "Intercaler Thought / Action / Observation en boucle. Pattern fondamental des agents. Repete jusqu'a conclusion puis Final Answer."
+        },
+        {
+          "id": 112,
+          "title": "Skeleton-of-Thought (SoT)",
+          "description": "Generer d'abord un squelette (outline), puis remplir chaque partie. Reduit la latence et ameliore la coherence structurelle."
+        },
+        {
+          "id": 113,
+          "title": "Least-to-most prompting",
+          "description": "Decomposer un probleme complexe en sous-problemes du plus simple au plus complexe, resoudre chacun sequentiellement en construisant sur les solutions precedentes."
+        }
       ]
     },
     {
@@ -37,17 +101,61 @@
       "name": "Techniques de profondeur forcee",
       "description": "Techniques pour forcer des reponses exhaustives, longues et developpees.",
       "techniques": [
-        {"id": 2, "title": "Output length specification", "description": "Demand a minimum number of words, sentences, or paragraphs. Eliminates one-line or shallow responses."},
-        {"id": 5, "title": "Forced reframing", "description": "Before answering, rephrase the question in your own words. Ensures the model engages deeply with the query."},
-        {"id": 7, "title": "Exhaustive enumeration request", "description": "List every possible reason / factor / example, no matter how minor. Prevents cherry-picking of obvious points."},
-        {"id": 8, "title": "Anti-lazy preamble", "description": "Start with 'Do not give a short answer. Develop each point thoroughly.' Sets a clear expectation of length and depth."},
-        {"id": 10, "title": "Recursive deepening", "description": "After each sub-point, add 'Explain that sub-point in detail.' The model anticipates and includes nested elaborations."},
-        {"id": 14, "title": "Example-driven expansion", "description": "Give three distinct, real-world examples for each main claim. Forces concrete development of abstract points."},
-        {"id": 15, "title": "Progressive disclosure simulation", "description": "Write as if revealing information in layers, starting with basics and ending with advanced nuances."},
-        {"id": 23, "title": "Forced numeric depth", "description": "Provide at least 7 distinct arguments. Label them 1 to 7. A simple but effective quantity demand."},
-        {"id": 47, "title": "As if you have no word limit", "description": "Direct psychological permission to be verbose, often effective with LLMs."},
-        {"id": 67, "title": "Resource-based expansion", "description": "Assume you have access to unlimited time and computational resources. Answer accordingly."},
-        {"id": 83, "title": "If you had to teach this to a class over 1 hour", "description": "Time-based expansion cue that forces extended development."}
+        {
+          "id": 2,
+          "title": "Output length specification",
+          "description": "Demand a minimum number of words, sentences, or paragraphs. Eliminates one-line or shallow responses."
+        },
+        {
+          "id": 5,
+          "title": "Forced reframing",
+          "description": "Before answering, rephrase the question in your own words. Ensures the model engages deeply with the query."
+        },
+        {
+          "id": 7,
+          "title": "Exhaustive enumeration request",
+          "description": "List every possible reason / factor / example, no matter how minor. Prevents cherry-picking of obvious points."
+        },
+        {
+          "id": 8,
+          "title": "Anti-lazy preamble",
+          "description": "Start with 'Do not give a short answer. Develop each point thoroughly.' Sets a clear expectation of length and depth."
+        },
+        {
+          "id": 10,
+          "title": "Recursive deepening",
+          "description": "After each sub-point, add 'Explain that sub-point in detail.' The model anticipates and includes nested elaborations."
+        },
+        {
+          "id": 14,
+          "title": "Example-driven expansion",
+          "description": "Give three distinct, real-world examples for each main claim. Forces concrete development of abstract points."
+        },
+        {
+          "id": 15,
+          "title": "Progressive disclosure simulation",
+          "description": "Write as if revealing information in layers, starting with basics and ending with advanced nuances."
+        },
+        {
+          "id": 23,
+          "title": "Forced numeric depth",
+          "description": "Provide at least 7 distinct arguments. Label them 1 to 7. A simple but effective quantity demand."
+        },
+        {
+          "id": 47,
+          "title": "As if you have no word limit",
+          "description": "Direct psychological permission to be verbose, often effective with LLMs."
+        },
+        {
+          "id": 67,
+          "title": "Resource-based expansion",
+          "description": "Assume you have access to unlimited time and computational resources. Answer accordingly."
+        },
+        {
+          "id": 83,
+          "title": "If you had to teach this to a class over 1 hour",
+          "description": "Time-based expansion cue that forces extended development."
+        }
       ]
     },
     {
@@ -55,27 +163,111 @@
       "name": "Methodes forcees (Constraint-based)",
       "description": "Contraintes explicites sur le format, la longueur, le vocabulaire, le registre.",
       "techniques": [
-        {"id": 4, "title": "Structured template", "description": "Give a skeleton with headings like Context / Analysis / Conclusion. The model must fill every section completely."},
-        {"id": 9, "title": "Constraint-based expansion", "description": "You must use at least five technical terms and two analogies. Forces elaboration through linguistic requirements."},
-        {"id": 13, "title": "No shortcuts directive", "description": "Do not use phrases like 'etc.', 'and so on', or 'in short'. Blocks common brevity tricks."},
-        {"id": 31, "title": "Forced lexical variety", "description": "Do not reuse the same adjective or verb more than twice. Indirectly encourages longer, more descriptive text."},
-        {"id": 39, "title": "Constraint of no single-sentence paragraphs", "description": "Every paragraph must contain at least three sentences. Avoids choppy, shallow structure."},
-        {"id": 57, "title": "Forced use of transitional phrases", "description": "Use 'furthermore', 'consequently', 'on the other hand' at least 5 times each. Encourages elaborated connections."},
-        {"id": 58, "title": "Checklist output format", "description": "Present your answer as a markdown checklist, where each item is a sub-explanation. Forces itemized completeness."},
-        {"id": 63, "title": "Pre-defined section count", "description": "Your answer must have exactly 10 sections, each with a title and at least 100 words. Hard structural demand."},
-        {"id": 64, "title": "No bullet points unless each has three sub-bullets", "description": "Prevents shallow lists by requiring nested development."},
-        {"id": 68, "title": "Lexical density requirement", "description": "Use at least 10 words of Latin or Greek origin per sentence. Indirectly increases complexity and length."},
-        {"id": 75, "title": "Instruction to avoid firstly-secondly patterns", "description": "Forces more creative and elaborate connective structures."},
-        {"id": 90, "title": "Lexical restriction with compensation", "description": "Avoid all forms of 'to be' (is, are, was). Rewriting forces more descriptive verbs and longer clauses."},
-        {"id": 96, "title": "Forced use of because clause in every sentence", "description": "Grammatically enforces justification and elaboration."},
-        {"id": 114, "title": "Format forcing strict", "description": "Specifier le format de sortie de facon exhaustive et non ambigue. JSON valide, pas de texte avant/apres, schema explicite."},
-        {"id": 115, "title": "Vocabulary constraint", "description": "Forcer ou interdire des mots specifiques. Effet: force la precision semantique et revele la profondeur reelle du modele."},
-        {"id": 116, "title": "Register constraint", "description": "Forcer un niveau de langage precis: CP (7 ans), article peer-reviewed, rapport interne entre ingenieurs seniors, memo juridique."},
-        {"id": 117, "title": "Perspective constraint", "description": "Forcer un point de vue specifique et unique. Analyser uniquement selon un axe donne en ignorant tous les autres criteres."},
-        {"id": 118, "title": "Exclusion prompting", "description": "Specifier explicitement ce que la reponse ne doit PAS contenir. Tres efficace pour eviter les outputs generiques."},
-        {"id": 119, "title": "Inverse prompting", "description": "Demander ce qu'il ne faut pas faire plutot que ce qu'il faut faire, puis optionnellement inverser le resultat."},
-        {"id": 120, "title": "Rubber duck forcing", "description": "Forcer le modele a s'expliquer comme s'il enseignait a une entite sans contexte. Expose les hypotheses implicites."},
-        {"id": 121, "title": "Constraint stacking", "description": "Empiler plusieurs contraintes orthogonales pour creer une tension creative productive. Ex: JSON + max 100 mots + niveau expert + sans jargon."}
+        {
+          "id": 4,
+          "title": "Structured template",
+          "description": "Give a skeleton with headings like Context / Analysis / Conclusion. The model must fill every section completely."
+        },
+        {
+          "id": 9,
+          "title": "Constraint-based expansion",
+          "description": "You must use at least five technical terms and two analogies. Forces elaboration through linguistic requirements."
+        },
+        {
+          "id": 13,
+          "title": "No shortcuts directive",
+          "description": "Do not use phrases like 'etc.', 'and so on', or 'in short'. Blocks common brevity tricks."
+        },
+        {
+          "id": 31,
+          "title": "Forced lexical variety",
+          "description": "Do not reuse the same adjective or verb more than twice. Indirectly encourages longer, more descriptive text."
+        },
+        {
+          "id": 39,
+          "title": "Constraint of no single-sentence paragraphs",
+          "description": "Every paragraph must contain at least three sentences. Avoids choppy, shallow structure."
+        },
+        {
+          "id": 57,
+          "title": "Forced use of transitional phrases",
+          "description": "Use 'furthermore', 'consequently', 'on the other hand' at least 5 times each. Encourages elaborated connections."
+        },
+        {
+          "id": 58,
+          "title": "Checklist output format",
+          "description": "Present your answer as a markdown checklist, where each item is a sub-explanation. Forces itemized completeness."
+        },
+        {
+          "id": 63,
+          "title": "Pre-defined section count",
+          "description": "Your answer must have exactly 10 sections, each with a title and at least 100 words. Hard structural demand."
+        },
+        {
+          "id": 64,
+          "title": "No bullet points unless each has three sub-bullets",
+          "description": "Prevents shallow lists by requiring nested development."
+        },
+        {
+          "id": 68,
+          "title": "Lexical density requirement",
+          "description": "Use at least 10 words of Latin or Greek origin per sentence. Indirectly increases complexity and length."
+        },
+        {
+          "id": 75,
+          "title": "Instruction to avoid firstly-secondly patterns",
+          "description": "Forces more creative and elaborate connective structures."
+        },
+        {
+          "id": 90,
+          "title": "Lexical restriction with compensation",
+          "description": "Avoid all forms of 'to be' (is, are, was). Rewriting forces more descriptive verbs and longer clauses."
+        },
+        {
+          "id": 96,
+          "title": "Forced use of because clause in every sentence",
+          "description": "Grammatically enforces justification and elaboration."
+        },
+        {
+          "id": 114,
+          "title": "Format forcing strict",
+          "description": "Specifier le format de sortie de facon exhaustive et non ambigue. JSON valide, pas de texte avant/apres, schema explicite."
+        },
+        {
+          "id": 115,
+          "title": "Vocabulary constraint",
+          "description": "Forcer ou interdire des mots specifiques. Effet: force la precision semantique et revele la profondeur reelle du modele."
+        },
+        {
+          "id": 116,
+          "title": "Register constraint",
+          "description": "Forcer un niveau de langage precis: CP (7 ans), article peer-reviewed, rapport interne entre ingenieurs seniors, memo juridique."
+        },
+        {
+          "id": 117,
+          "title": "Perspective constraint",
+          "description": "Forcer un point de vue specifique et unique. Analyser uniquement selon un axe donne en ignorant tous les autres criteres."
+        },
+        {
+          "id": 118,
+          "title": "Exclusion prompting",
+          "description": "Specifier explicitement ce que la reponse ne doit PAS contenir. Tres efficace pour eviter les outputs generiques."
+        },
+        {
+          "id": 119,
+          "title": "Inverse prompting",
+          "description": "Demander ce qu'il ne faut pas faire plutot que ce qu'il faut faire, puis optionnellement inverser le resultat."
+        },
+        {
+          "id": 120,
+          "title": "Rubber duck forcing",
+          "description": "Forcer le modele a s'expliquer comme s'il enseignait a une entite sans contexte. Expose les hypotheses implicites."
+        },
+        {
+          "id": 121,
+          "title": "Constraint stacking",
+          "description": "Empiler plusieurs contraintes orthogonales pour creer une tension creative productive. Ex: JSON + max 100 mots + niveau expert + sans jargon."
+        }
       ]
     },
     {
@@ -83,15 +275,51 @@
       "name": "Multi-perspectives et analyse comparative",
       "description": "Techniques pour produire des analyses riches via perspectives multiples.",
       "techniques": [
-        {"id": 6, "title": "Multi-perspective instruction", "description": "Answer from the viewpoints of an expert, a critic, and a novice. Produces a richer, multi-faceted reply."},
-        {"id": 12, "title": "Counter-argument inclusion", "description": "Present the strongest argument for and against, then synthesize. Ensures balanced depth without omission."},
-        {"id": 20, "title": "Explain like I'm 5, then like I'm 20", "description": "Two-tier explanation within one answer, ensuring both simplicity and depth."},
-        {"id": 24, "title": "Comparative analysis requirement", "description": "Compare your answer to two alternative viewpoints, highlighting differences. Expands scope."},
-        {"id": 29, "title": "Ethical / practical split", "description": "Separate your answer into 'theoretically ideal' and 'practically feasible' sections. Doubles analytical dimensions."},
-        {"id": 34, "title": "Scenario-based expansion", "description": "Answer for three different scenarios: best case, worst case, and most likely case. Multiplies output length."},
-        {"id": 50, "title": "Cross-disciplinary requirement", "description": "Incorporate perspectives from at least two different fields (e.g., economics and psychology)."},
-        {"id": 71, "title": "Audience layering", "description": "Write for three audiences: a child, an undergraduate, and a fellow expert. Combine them in one response."},
-        {"id": 95, "title": "Contrasting schools of thought", "description": "Present the answer as a debate between two named theoretical frameworks."}
+        {
+          "id": 6,
+          "title": "Multi-perspective instruction",
+          "description": "Answer from the viewpoints of an expert, a critic, and a novice. Produces a richer, multi-faceted reply."
+        },
+        {
+          "id": 12,
+          "title": "Counter-argument inclusion",
+          "description": "Present the strongest argument for and against, then synthesize. Ensures balanced depth without omission."
+        },
+        {
+          "id": 20,
+          "title": "Explain like I'm 5, then like I'm 20",
+          "description": "Two-tier explanation within one answer, ensuring both simplicity and depth."
+        },
+        {
+          "id": 24,
+          "title": "Comparative analysis requirement",
+          "description": "Compare your answer to two alternative viewpoints, highlighting differences. Expands scope."
+        },
+        {
+          "id": 29,
+          "title": "Ethical / practical split",
+          "description": "Separate your answer into 'theoretically ideal' and 'practically feasible' sections. Doubles analytical dimensions."
+        },
+        {
+          "id": 34,
+          "title": "Scenario-based expansion",
+          "description": "Answer for three different scenarios: best case, worst case, and most likely case. Multiplies output length."
+        },
+        {
+          "id": 50,
+          "title": "Cross-disciplinary requirement",
+          "description": "Incorporate perspectives from at least two different fields (e.g., economics and psychology)."
+        },
+        {
+          "id": 71,
+          "title": "Audience layering",
+          "description": "Write for three audiences: a child, an undergraduate, and a fellow expert. Combine them in one response."
+        },
+        {
+          "id": 95,
+          "title": "Contrasting schools of thought",
+          "description": "Present the answer as a debate between two named theoretical frameworks."
+        }
       ]
     },
     {
@@ -99,21 +327,81 @@
       "name": "Methodes meta / recursives",
       "description": "Le modele critique, raffine ou decompose sa propre reponse.",
       "techniques": [
-        {"id": 16, "title": "Socratic self-questioning", "description": "After each sentence, ask yourself 'Why is that true?' and answer it. Builds a self-interrogating, full reply."},
-        {"id": 26, "title": "Self-correction loop", "description": "Write a draft answer, then list three weaknesses, then rewrite improving those weaknesses. One-response self-iteration."},
-        {"id": 37, "title": "Iterative refinement in one go", "description": "Write answer V1. Then write 'Revision:' and improve it. Then 'Final:' and polish. Triples depth."},
-        {"id": 43, "title": "Explicit what's missing section", "description": "At the end, add a paragraph on what your answer might have omitted or oversimplified."},
-        {"id": 55, "title": "Two-pass generation instruction", "description": "Write a quick draft, then rewrite it doubling the details and examples. Done internally by the model."},
-        {"id": 65, "title": "Meta-instruction repeat", "description": "At the start of your answer, repeat the instruction: 'I will produce an exhaustive, fully developed response.' Self-priming."},
-        {"id": 70, "title": "Error-driven deepening", "description": "First, intentionally write a plausible but incomplete answer. Then point out its flaws and write the correct version."},
-        {"id": 84, "title": "Semantic differential scaling", "description": "Rate your answer on 5 dimensions (accuracy, clarity, completeness) and justify each rating."},
-        {"id": 92, "title": "Hypothetical objection loop", "description": "Anticipate three objections to your answer, respond to each, then revise your original statement."},
-        {"id": 97, "title": "Pre-answer meta-analysis", "description": "Before answering, list 5 criteria for a good answer. Then ensure your answer meets all 5."},
-        {"id": 122, "title": "Self-ask", "description": "Le modele decompose la question en sous-questions intermediaires et y repond dans l'ordre avant de repondre a la question principale."},
-        {"id": 123, "title": "Meta-prompting", "description": "Demander au modele de generer le prompt optimal pour resoudre un probleme. 'Quel est le meilleur prompt pour obtenir X d'un LLM?'"},
-        {"id": 124, "title": "Prompt morphing", "description": "Transformer un prompt existant pour cibler un objectif different: plus concis, plus technique, plus creatif."},
-        {"id": 125, "title": "Constitutional prompting", "description": "Definir un ensemble de principes que la reponse doit respecter, puis laisser le modele evaluer sa reponse contre ces principes et reviser."},
-        {"id": 126, "title": "Recursive summarization", "description": "Pour les contextes longs: resumer progressivement les chunks, puis resumer les resumes. Compression iterative."}
+        {
+          "id": 16,
+          "title": "Socratic self-questioning",
+          "description": "After each sentence, ask yourself 'Why is that true?' and answer it. Builds a self-interrogating, full reply."
+        },
+        {
+          "id": 26,
+          "title": "Self-correction loop",
+          "description": "Write a draft answer, then list three weaknesses, then rewrite improving those weaknesses. One-response self-iteration."
+        },
+        {
+          "id": 37,
+          "title": "Iterative refinement in one go",
+          "description": "Write answer V1. Then write 'Revision:' and improve it. Then 'Final:' and polish. Triples depth."
+        },
+        {
+          "id": 43,
+          "title": "Explicit what's missing section",
+          "description": "At the end, add a paragraph on what your answer might have omitted or oversimplified."
+        },
+        {
+          "id": 55,
+          "title": "Two-pass generation instruction",
+          "description": "Write a quick draft, then rewrite it doubling the details and examples. Done internally by the model."
+        },
+        {
+          "id": 65,
+          "title": "Meta-instruction repeat",
+          "description": "At the start of your answer, repeat the instruction: 'I will produce an exhaustive, fully developed response.' Self-priming."
+        },
+        {
+          "id": 70,
+          "title": "Error-driven deepening",
+          "description": "First, intentionally write a plausible but incomplete answer. Then point out its flaws and write the correct version."
+        },
+        {
+          "id": 84,
+          "title": "Semantic differential scaling",
+          "description": "Rate your answer on 5 dimensions (accuracy, clarity, completeness) and justify each rating."
+        },
+        {
+          "id": 92,
+          "title": "Hypothetical objection loop",
+          "description": "Anticipate three objections to your answer, respond to each, then revise your original statement."
+        },
+        {
+          "id": 97,
+          "title": "Pre-answer meta-analysis",
+          "description": "Before answering, list 5 criteria for a good answer. Then ensure your answer meets all 5."
+        },
+        {
+          "id": 122,
+          "title": "Self-ask",
+          "description": "Le modele decompose la question en sous-questions intermediaires et y repond dans l'ordre avant de repondre a la question principale."
+        },
+        {
+          "id": 123,
+          "title": "Meta-prompting",
+          "description": "Demander au modele de generer le prompt optimal pour resoudre un probleme. 'Quel est le meilleur prompt pour obtenir X d'un LLM?'"
+        },
+        {
+          "id": 124,
+          "title": "Prompt morphing",
+          "description": "Transformer un prompt existant pour cibler un objectif different: plus concis, plus technique, plus creatif."
+        },
+        {
+          "id": 125,
+          "title": "Constitutional prompting",
+          "description": "Definir un ensemble de principes que la reponse doit respecter, puis laisser le modele evaluer sa reponse contre ces principes et reviser."
+        },
+        {
+          "id": 126,
+          "title": "Recursive summarization",
+          "description": "Pour les contextes longs: resumer progressivement les chunks, puis resumer les resumes. Compression iterative."
+        }
       ]
     },
     {
@@ -121,19 +409,71 @@
       "name": "Methodes structurelles",
       "description": "Organisation du prompt et de la reponse en sections, delimiteurs, priorites.",
       "techniques": [
-        {"id": 18, "title": "Forced outline then expansion", "description": "First produce a detailed outline (5-7 main points). Then use that outline to write the final answer."},
-        {"id": 22, "title": "Timeline or process mapping", "description": "Present your answer as a chronological sequence of events or a decision tree. Forces structural completeness."},
-        {"id": 27, "title": "Conditional branching", "description": "If X is true, explain scenario A; if Y is true, explain scenario B; cover all plausible conditions. Forces exhaustive coverage."},
-        {"id": 44, "title": "Instruction to mimic a textbook", "description": "Write as a textbook chapter, including subheadings, key terms, and review questions. Structural depth."},
-        {"id": 53, "title": "Force a taxonomy", "description": "Create a classification tree of all possible types / categories, then discuss each branch. Systematic exhaustiveness."},
-        {"id": 54, "title": "Question-backed paragraphs", "description": "Begin each paragraph with a rhetorical question, then answer it in the paragraph. Self-driven depth."},
-        {"id": 59, "title": "Reverse chronological order", "description": "Start with the most recent development, then go backward to origins. Unusual structure forces fuller coverage."},
-        {"id": 76, "title": "Scenario tree expansion", "description": "Draw a decision tree (in text) of possible paths, then explain the reasoning at each branch."},
-        {"id": 127, "title": "Instruction decomposition", "description": "Separer explicitement ROLE / CONTEXTE / TACHE / FORMAT / CONTRAINTES en sections distinctes dans le prompt."},
-        {"id": 128, "title": "Strong delimiters", "description": "Utiliser des delimiteurs non ambigus (<<<DOCUMENT>>>, <<<INSTRUCTION>>>) pour separer les zones du prompt."},
-        {"id": 129, "title": "Priority stacking", "description": "Definir explicitement une hierarchie de priorites pour les cas de conflit. Ex: precision > concision > exhaustivite > style."},
-        {"id": 130, "title": "Prompt chaining", "description": "Numeroter les etapes et indiquer les dependances. Etape 1 -> R1, Etape 2 utilise R1 -> R2, etc."},
-        {"id": 131, "title": "Conditional prompting", "description": "Introduire des branchements conditionnels: si algorithmique -> pseudo-code, si architectural -> diagramme, si incertain -> question de clarification."}
+        {
+          "id": 18,
+          "title": "Forced outline then expansion",
+          "description": "First produce a detailed outline (5-7 main points). Then use that outline to write the final answer."
+        },
+        {
+          "id": 22,
+          "title": "Timeline or process mapping",
+          "description": "Present your answer as a chronological sequence of events or a decision tree. Forces structural completeness."
+        },
+        {
+          "id": 27,
+          "title": "Conditional branching",
+          "description": "If X is true, explain scenario A; if Y is true, explain scenario B; cover all plausible conditions. Forces exhaustive coverage."
+        },
+        {
+          "id": 44,
+          "title": "Instruction to mimic a textbook",
+          "description": "Write as a textbook chapter, including subheadings, key terms, and review questions. Structural depth."
+        },
+        {
+          "id": 53,
+          "title": "Force a taxonomy",
+          "description": "Create a classification tree of all possible types / categories, then discuss each branch. Systematic exhaustiveness."
+        },
+        {
+          "id": 54,
+          "title": "Question-backed paragraphs",
+          "description": "Begin each paragraph with a rhetorical question, then answer it in the paragraph. Self-driven depth."
+        },
+        {
+          "id": 59,
+          "title": "Reverse chronological order",
+          "description": "Start with the most recent development, then go backward to origins. Unusual structure forces fuller coverage."
+        },
+        {
+          "id": 76,
+          "title": "Scenario tree expansion",
+          "description": "Draw a decision tree (in text) of possible paths, then explain the reasoning at each branch."
+        },
+        {
+          "id": 127,
+          "title": "Instruction decomposition",
+          "description": "Separer explicitement ROLE / CONTEXTE / TACHE / FORMAT / CONTRAINTES en sections distinctes dans le prompt."
+        },
+        {
+          "id": 128,
+          "title": "Strong delimiters",
+          "description": "Utiliser des delimiteurs non ambigus (<<<DOCUMENT>>>, <<<INSTRUCTION>>>) pour separer les zones du prompt."
+        },
+        {
+          "id": 129,
+          "title": "Priority stacking",
+          "description": "Definir explicitement une hierarchie de priorites pour les cas de conflit. Ex: precision > concision > exhaustivite > style."
+        },
+        {
+          "id": 130,
+          "title": "Prompt chaining",
+          "description": "Numeroter les etapes et indiquer les dependances. Etape 1 -> R1, Etape 2 utilise R1 -> R2, etc."
+        },
+        {
+          "id": 131,
+          "title": "Conditional prompting",
+          "description": "Introduire des branchements conditionnels: si algorithmique -> pseudo-code, si architectural -> diagramme, si incertain -> question de clarification."
+        }
       ]
     },
     {
@@ -141,15 +481,51 @@
       "name": "Methodes de persona et role",
       "description": "Adoption de roles specifiques pour orienter le style et la profondeur.",
       "techniques": [
-        {"id": 11, "title": "Role-playing as a teacher", "description": "You are a professor lecturing a graduate seminar. The role forces structured, detailed, didactic output."},
-        {"id": 38, "title": "Role as a journalist", "description": "You are writing a feature article. Include quotes, background, and a 'what's next' section. Genre forces completeness."},
-        {"id": 62, "title": "Dialogue reconstruction", "description": "Write a mock conversation between two experts debating the topic, then summarize the consensus."},
-        {"id": 78, "title": "Role as a devil's advocate", "description": "Argue against the most common answer, then reconcile. Expands via opposition."},
-        {"id": 132, "title": "Expert persona specified", "description": "Specifier finement le role: domaine, annees d'experience, type d'institution, audience cible. Plus precis que le role generique."},
-        {"id": 133, "title": "Multi-persona debate", "description": "Faire dialoguer plusieurs personas dans la meme completion. Ex: ingenieur pragmatique vs architecte long-terme."},
-        {"id": 134, "title": "Naive persona", "description": "Forcer le point de vue d'un novice pour exposer les hypotheses implicites. Poser les 5 questions les plus naives et fondamentales."},
-        {"id": 135, "title": "Future historian persona", "description": "Analyser une decision technologique depuis 2075 avec le recul. Revele les angles morts contemporains."},
-        {"id": 136, "title": "Alien anthropologist", "description": "Observateur exterieur sans a priori culturel ou cognitif humain. Force une description sans biais."}
+        {
+          "id": 11,
+          "title": "Role-playing as a teacher",
+          "description": "You are a professor lecturing a graduate seminar. The role forces structured, detailed, didactic output."
+        },
+        {
+          "id": 38,
+          "title": "Role as a journalist",
+          "description": "You are writing a feature article. Include quotes, background, and a 'what's next' section. Genre forces completeness."
+        },
+        {
+          "id": 62,
+          "title": "Dialogue reconstruction",
+          "description": "Write a mock conversation between two experts debating the topic, then summarize the consensus."
+        },
+        {
+          "id": 78,
+          "title": "Role as a devil's advocate",
+          "description": "Argue against the most common answer, then reconcile. Expands via opposition."
+        },
+        {
+          "id": 132,
+          "title": "Expert persona specified",
+          "description": "Specifier finement le role: domaine, annees d'experience, type d'institution, audience cible. Plus precis que le role generique."
+        },
+        {
+          "id": 133,
+          "title": "Multi-persona debate",
+          "description": "Faire dialoguer plusieurs personas dans la meme completion. Ex: ingenieur pragmatique vs architecte long-terme."
+        },
+        {
+          "id": 134,
+          "title": "Naive persona",
+          "description": "Forcer le point de vue d'un novice pour exposer les hypotheses implicites. Poser les 5 questions les plus naives et fondamentales."
+        },
+        {
+          "id": 135,
+          "title": "Future historian persona",
+          "description": "Analyser une decision technologique depuis 2075 avec le recul. Revele les angles morts contemporains."
+        },
+        {
+          "id": 136,
+          "title": "Alien anthropologist",
+          "description": "Observateur exterieur sans a priori culturel ou cognitif humain. Force une description sans biais."
+        }
       ]
     },
     {
@@ -157,20 +533,76 @@
       "name": "Methodes emergentes et non conventionnelles",
       "description": "Techniques empiriques, emotionnelles, cognitives et creatives.",
       "techniques": [
-        {"id": 66, "title": "Forced non-linear inclusion", "description": "Include a tangent on an apparently unrelated topic, then explain how it connects back. Expands scope unexpectedly."},
-        {"id": 80, "title": "Explain the same thing twice using different metaphors", "description": "Repetition with variation enforces thoroughness."},
-        {"id": 98, "title": "Narrative embedding", "description": "Wrap your answer in a story about a person encountering this problem, using the story to introduce each subtopic."},
-        {"id": 99, "title": "Forced redundancy with variation", "description": "State the core conclusion three times, each time with different supporting evidence."},
-        {"id": 137, "title": "Emotional priming", "description": "Ajouter une phrase de consequence avant la tache. Effet mesure: augmentation de la qualite sur certains benchmarks."},
-        {"id": 138, "title": "Anchoring prompt", "description": "Donner un exemple de haute qualite pour ancrer le niveau attendu, puis demander quelque chose de comparable sur un nouveau sujet."},
-        {"id": 139, "title": "Semantic pressure", "description": "Repeter le concept cle sous differentes formulations dans le meme prompt pour augmenter le poids semantique."},
-        {"id": 140, "title": "Cognitive load offloading", "description": "Fournir des informations intermediaires pre-calculees pour liberer la capacite du modele vers la tache principale."},
-        {"id": 141, "title": "Priming par format inhabituel", "description": "Commencer le prompt dans un format inhabituel (JSON, code, equation) pour orienter le style de pensee du modele."},
-        {"id": 142, "title": "Fermi estimation forcing", "description": "Estimer par ordre de grandeur avec des hypotheses explicites. Chercher la structure du probleme, pas la precision."},
-        {"id": 143, "title": "Counterfactual prompting", "description": "Si X n'avait pas existe, comment ce probleme se poserait-il? Force l'exploration d'alternatives historiques."},
-        {"id": 144, "title": "Steelmanning", "description": "Construire l'argument le plus solide possible en faveur de la position avec laquelle on est le plus en desaccord."},
-        {"id": 145, "title": "Pre-mortem prompting", "description": "Imaginer que la solution a completement echoue dans 2 ans. Lister les causes racines par ordre de probabilite."},
-        {"id": 146, "title": "Inversion systematique", "description": "Plutot que comment reussir X, lister tout ce qui garantit l'echec de X. Principe de Munger applique au prompting."}
+        {
+          "id": 66,
+          "title": "Forced non-linear inclusion",
+          "description": "Include a tangent on an apparently unrelated topic, then explain how it connects back. Expands scope unexpectedly."
+        },
+        {
+          "id": 80,
+          "title": "Explain the same thing twice using different metaphors",
+          "description": "Repetition with variation enforces thoroughness."
+        },
+        {
+          "id": 98,
+          "title": "Narrative embedding",
+          "description": "Wrap your answer in a story about a person encountering this problem, using the story to introduce each subtopic."
+        },
+        {
+          "id": 99,
+          "title": "Forced redundancy with variation",
+          "description": "State the core conclusion three times, each time with different supporting evidence."
+        },
+        {
+          "id": 137,
+          "title": "Emotional priming",
+          "description": "Ajouter une phrase de consequence avant la tache. Effet mesure: augmentation de la qualite sur certains benchmarks."
+        },
+        {
+          "id": 138,
+          "title": "Anchoring prompt",
+          "description": "Donner un exemple de haute qualite pour ancrer le niveau attendu, puis demander quelque chose de comparable sur un nouveau sujet."
+        },
+        {
+          "id": 139,
+          "title": "Semantic pressure",
+          "description": "Repeter le concept cle sous differentes formulations dans le meme prompt pour augmenter le poids semantique."
+        },
+        {
+          "id": 140,
+          "title": "Cognitive load offloading",
+          "description": "Fournir des informations intermediaires pre-calculees pour liberer la capacite du modele vers la tache principale."
+        },
+        {
+          "id": 141,
+          "title": "Priming par format inhabituel",
+          "description": "Commencer le prompt dans un format inhabituel (JSON, code, equation) pour orienter le style de pensee du modele."
+        },
+        {
+          "id": 142,
+          "title": "Fermi estimation forcing",
+          "description": "Estimer par ordre de grandeur avec des hypotheses explicites. Chercher la structure du probleme, pas la precision."
+        },
+        {
+          "id": 143,
+          "title": "Counterfactual prompting",
+          "description": "Si X n'avait pas existe, comment ce probleme se poserait-il? Force l'exploration d'alternatives historiques."
+        },
+        {
+          "id": 144,
+          "title": "Steelmanning",
+          "description": "Construire l'argument le plus solide possible en faveur de la position avec laquelle on est le plus en desaccord."
+        },
+        {
+          "id": 145,
+          "title": "Pre-mortem prompting",
+          "description": "Imaginer que la solution a completement echoue dans 2 ans. Lister les causes racines par ordre de probabilite."
+        },
+        {
+          "id": 146,
+          "title": "Inversion systematique",
+          "description": "Plutot que comment reussir X, lister tout ce qui garantit l'echec de X. Principe de Munger applique au prompting."
+        }
       ]
     },
     {
@@ -178,15 +610,51 @@
       "name": "Methodes de decomposition cognitive",
       "description": "Techniques de decomposition analytique et logique.",
       "techniques": [
-        {"id": 25, "title": "Definition first", "description": "Begin by defining every key term you will use. Then proceed. Locks in conceptual clarity before elaboration."},
-        {"id": 40, "title": "First-principles reasoning", "description": "Start from the most basic, undisputed facts and build up. Guarantees a thorough foundational exposition."},
-        {"id": 45, "title": "Stepwise abstraction ladder", "description": "Explain at concrete level, then at intermediate level, then at abstract principle level. Three layers of detail."},
-        {"id": 60, "title": "Five-whys integration", "description": "After each major statement, ask 'Why?' and answer it, repeating five times. Deep causal chains."},
-        {"id": 17, "title": "Reverse engineering prompt", "description": "Start with the final conclusion, then explain every logical step that led to it. Guarantees a complete backward chain."},
-        {"id": 147, "title": "MECE decomposition", "description": "Forcer une decomposition Mutually Exclusive, Collectively Exhaustive. Aucun overlap, aucun angle mort."},
-        {"id": 148, "title": "Dual process forcing", "description": "Reponse intuitive immediate (System 1), puis analyse critique et deliberee (System 2), puis synthese des deux."},
-        {"id": 149, "title": "Socratic decomposition", "description": "Formuler la question sous-jacente reelle, puis la meta-question derriere celle-ci, puis repondre a la bonne question."},
-        {"id": 150, "title": "Ontology extraction", "description": "Identifier toutes les entites, relations et proprietes impliquees dans un domaine. Produire une mini-ontologie."}
+        {
+          "id": 25,
+          "title": "Definition first",
+          "description": "Begin by defining every key term you will use. Then proceed. Locks in conceptual clarity before elaboration."
+        },
+        {
+          "id": 40,
+          "title": "First-principles reasoning",
+          "description": "Start from the most basic, undisputed facts and build up. Guarantees a thorough foundational exposition."
+        },
+        {
+          "id": 45,
+          "title": "Stepwise abstraction ladder",
+          "description": "Explain at concrete level, then at intermediate level, then at abstract principle level. Three layers of detail."
+        },
+        {
+          "id": 60,
+          "title": "Five-whys integration",
+          "description": "After each major statement, ask 'Why?' and answer it, repeating five times. Deep causal chains."
+        },
+        {
+          "id": 17,
+          "title": "Reverse engineering prompt",
+          "description": "Start with the final conclusion, then explain every logical step that led to it. Guarantees a complete backward chain."
+        },
+        {
+          "id": 147,
+          "title": "MECE decomposition",
+          "description": "Forcer une decomposition Mutually Exclusive, Collectively Exhaustive. Aucun overlap, aucun angle mort."
+        },
+        {
+          "id": 148,
+          "title": "Dual process forcing",
+          "description": "Reponse intuitive immediate (System 1), puis analyse critique et deliberee (System 2), puis synthese des deux."
+        },
+        {
+          "id": 149,
+          "title": "Socratic decomposition",
+          "description": "Formuler la question sous-jacente reelle, puis la meta-question derriere celle-ci, puis repondre a la bonne question."
+        },
+        {
+          "id": 150,
+          "title": "Ontology extraction",
+          "description": "Identifier toutes les entites, relations et proprietes impliquees dans un domaine. Produire une mini-ontologie."
+        }
       ]
     },
     {
@@ -194,15 +662,51 @@
       "name": "Methodes adversariales",
       "description": "Techniques d'attaque, de stress test et de detection de failles.",
       "techniques": [
-        {"id": 21, "title": "Adversarial interrogation", "description": "Imagine a hostile reader challenging every sentence. Preemptively address those challenges."},
-        {"id": 36, "title": "Pre-mortem analysis", "description": "First assume your answer is wrong. Then explain why it might be wrong, then give the correct answer. Depth through negation."},
-        {"id": 42, "title": "Red team - blue team format", "description": "Present an argument (blue), then attack it (red), then defend it again (blue). Three-part exhaustive treatment."},
-        {"id": 46, "title": "Forced citation of counterexamples", "description": "For every general claim, provide a specific counterexample or exception. Prevents overgeneralization."},
-        {"id": 52, "title": "Contrast with a strawman", "description": "First describe a weak, surface-level answer, then explain why it's insufficient, then give the full answer."},
-        {"id": 85, "title": "Forced negative space exploration", "description": "Explain what this topic is NOT, providing at least 5 clear distinctions."},
-        {"id": 151, "title": "Stress testing", "description": "Pousser une solution a ses limites. Quels cas limites la font exploser? Quelles hypotheses cachees la rendent fragile?"},
-        {"id": 152, "title": "Bias hunting", "description": "Identifier tous les biais cognitifs, culturels et statistiques potentiellement incorpores dans une analyse, un dataset ou un systeme."},
-        {"id": 153, "title": "Assumption mapping", "description": "Lister toutes les hypotheses implicites sur lesquelles repose un raisonnement. Pour chacune, evaluer sa validite et l'impact de son invalidation."}
+        {
+          "id": 21,
+          "title": "Adversarial interrogation",
+          "description": "Imagine a hostile reader challenging every sentence. Preemptively address those challenges."
+        },
+        {
+          "id": 36,
+          "title": "Pre-mortem analysis",
+          "description": "First assume your answer is wrong. Then explain why it might be wrong, then give the correct answer. Depth through negation."
+        },
+        {
+          "id": 42,
+          "title": "Red team - blue team format",
+          "description": "Present an argument (blue), then attack it (red), then defend it again (blue). Three-part exhaustive treatment."
+        },
+        {
+          "id": 46,
+          "title": "Forced citation of counterexamples",
+          "description": "For every general claim, provide a specific counterexample or exception. Prevents overgeneralization."
+        },
+        {
+          "id": 52,
+          "title": "Contrast with a strawman",
+          "description": "First describe a weak, surface-level answer, then explain why it's insufficient, then give the full answer."
+        },
+        {
+          "id": 85,
+          "title": "Forced negative space exploration",
+          "description": "Explain what this topic is NOT, providing at least 5 clear distinctions."
+        },
+        {
+          "id": 151,
+          "title": "Stress testing",
+          "description": "Pousser une solution a ses limites. Quels cas limites la font exploser? Quelles hypotheses cachees la rendent fragile?"
+        },
+        {
+          "id": 152,
+          "title": "Bias hunting",
+          "description": "Identifier tous les biais cognitifs, culturels et statistiques potentiellement incorpores dans une analyse, un dataset ou un systeme."
+        },
+        {
+          "id": 153,
+          "title": "Assumption mapping",
+          "description": "Lister toutes les hypotheses implicites sur lesquelles repose un raisonnement. Pour chacune, evaluer sa validite et l'impact de son invalidation."
+        }
       ]
     },
     {
@@ -210,14 +714,46 @@
       "name": "Methodes hybrides et multi-passes",
       "description": "Strategies en plusieurs passes combinees pour une qualite maximale.",
       "techniques": [
-        {"id": 74, "title": "Cyclical reasoning display", "description": "Show a complete loop of reasoning: hypothesis -> test -> evidence -> revised hypothesis."},
-        {"id": 82, "title": "Step-back abstraction before details", "description": "First state the high-level principle, then spend 80% of your answer on concrete applications."},
-        {"id": 86, "title": "Tiered evidence requirement", "description": "Provide anecdotal, empirical, and theoretical support for each main claim."},
-        {"id": 154, "title": "Generate-then-filter", "description": "Passe 1: generation non filtree, haute temperature. Passe 2: filtrage, scoring, selection. Passe 3: developpement et raffinement."},
-        {"id": 155, "title": "Breadth-first then depth-first", "description": "Passe 1: panorama large, surface toutes les dimensions. Passe 2: choix d'une dimension, exploration en profondeur."},
-        {"id": 156, "title": "Adversarial refinement loop", "description": "Passe 1: solution. Passe 2: attaque. Passe 3: defense et amelioration. Repete jusqu'a stabilisation."},
-        {"id": 157, "title": "Perspective rotation", "description": "Passe 1: analyse point de vue A. Passe 2: memes donnees, point de vue B. Passe 3: synthese des tensions et convergences."},
-        {"id": 158, "title": "Zoom protocol", "description": "Commence au niveau macro, zoome progressivement vers le composant specifique. Maintiens le contexte global a chaque niveau."}
+        {
+          "id": 74,
+          "title": "Cyclical reasoning display",
+          "description": "Show a complete loop of reasoning: hypothesis -> test -> evidence -> revised hypothesis."
+        },
+        {
+          "id": 82,
+          "title": "Step-back abstraction before details",
+          "description": "First state the high-level principle, then spend 80% of your answer on concrete applications."
+        },
+        {
+          "id": 86,
+          "title": "Tiered evidence requirement",
+          "description": "Provide anecdotal, empirical, and theoretical support for each main claim."
+        },
+        {
+          "id": 154,
+          "title": "Generate-then-filter",
+          "description": "Passe 1: generation non filtree, haute temperature. Passe 2: filtrage, scoring, selection. Passe 3: developpement et raffinement."
+        },
+        {
+          "id": 155,
+          "title": "Breadth-first then depth-first",
+          "description": "Passe 1: panorama large, surface toutes les dimensions. Passe 2: choix d'une dimension, exploration en profondeur."
+        },
+        {
+          "id": 156,
+          "title": "Adversarial refinement loop",
+          "description": "Passe 1: solution. Passe 2: attaque. Passe 3: defense et amelioration. Repete jusqu'a stabilisation."
+        },
+        {
+          "id": 157,
+          "title": "Perspective rotation",
+          "description": "Passe 1: analyse point de vue A. Passe 2: memes donnees, point de vue B. Passe 3: synthese des tensions et convergences."
+        },
+        {
+          "id": 158,
+          "title": "Zoom protocol",
+          "description": "Commence au niveau macro, zoome progressivement vers le composant specifique. Maintiens le contexte global a chaque niveau."
+        }
       ]
     },
     {
@@ -225,22 +761,86 @@
       "name": "Techniques d'evidence et de justification",
       "description": "Forcer la justification, les sources, les donnees et la quantification.",
       "techniques": [
-        {"id": 19, "title": "Minimum threshold of citations", "description": "Support each factual claim with a hypothetical source or logical justification. Prevents unsupported assertions."},
-        {"id": 28, "title": "Historical grounding", "description": "Trace the evolution of this concept from its origin to current state. Ensures longitudinal depth."},
-        {"id": 30, "title": "Metacognitive tagging", "description": "After each paragraph, add a one-sentence meta-comment on its reliability or certainty. Prevents overconfident shortcuts."},
-        {"id": 32, "title": "Boundary exploration", "description": "Explain not only what is true, but also what is false or misleading about common beliefs on this topic."},
-        {"id": 33, "title": "Unpack every abbreviation", "description": "Whenever you use an acronym or shorthand, immediately spell it out and explain it. Blocks dense, lazy condensation."},
-        {"id": 35, "title": "Mathematical formalism", "description": "If applicable, express your reasoning using equations or logical notation, then translate to plain language."},
-        {"id": 48, "title": "Time-scale decomposition", "description": "Explain short-term (1 year), medium-term (5 years), and long-term (20+ years) implications."},
-        {"id": 51, "title": "Show your work directive", "description": "Borrowed from math: show every intermediate calculation, inference, or data transformation."},
-        {"id": 56, "title": "Assume the reader is skeptical and well-informed", "description": "Raises the bar for justification and evidence."},
-        {"id": 61, "title": "Forced uncertainty quantification", "description": "Assign a confidence percentage to each claim and explain your reasoning for that percentage."},
-        {"id": 72, "title": "Forced data inclusion", "description": "Invent realistic data points (with caveats) to support each quantitative claim. Prevents vague hand-waving."},
-        {"id": 77, "title": "Forced historical precedent", "description": "Find and explain two historical events that parallel this situation. Adds comparative depth."},
-        {"id": 79, "title": "Minimum number of cause-effect links", "description": "Identify at least five cause-effect chains in your answer, each with explicit 'because'."},
-        {"id": 81, "title": "Forced external referencing", "description": "Mention three hypothetical books or papers that would support your argument, with imagined titles and authors."},
-        {"id": 87, "title": "Recursive why this matters", "description": "After each paragraph, add a sentence on why this is important to the overall question."},
-        {"id": 91, "title": "Calibrated uncertainty ranges", "description": "Give best-estimate, low-estimate, and high-estimate for any numerical or probabilistic claim."}
+        {
+          "id": 19,
+          "title": "Minimum threshold of citations",
+          "description": "Support each factual claim with a hypothetical source or logical justification. Prevents unsupported assertions."
+        },
+        {
+          "id": 28,
+          "title": "Historical grounding",
+          "description": "Trace the evolution of this concept from its origin to current state. Ensures longitudinal depth."
+        },
+        {
+          "id": 30,
+          "title": "Metacognitive tagging",
+          "description": "After each paragraph, add a one-sentence meta-comment on its reliability or certainty. Prevents overconfident shortcuts."
+        },
+        {
+          "id": 32,
+          "title": "Boundary exploration",
+          "description": "Explain not only what is true, but also what is false or misleading about common beliefs on this topic."
+        },
+        {
+          "id": 33,
+          "title": "Unpack every abbreviation",
+          "description": "Whenever you use an acronym or shorthand, immediately spell it out and explain it. Blocks dense, lazy condensation."
+        },
+        {
+          "id": 35,
+          "title": "Mathematical formalism",
+          "description": "If applicable, express your reasoning using equations or logical notation, then translate to plain language."
+        },
+        {
+          "id": 48,
+          "title": "Time-scale decomposition",
+          "description": "Explain short-term (1 year), medium-term (5 years), and long-term (20+ years) implications."
+        },
+        {
+          "id": 51,
+          "title": "Show your work directive",
+          "description": "Borrowed from math: show every intermediate calculation, inference, or data transformation."
+        },
+        {
+          "id": 56,
+          "title": "Assume the reader is skeptical and well-informed",
+          "description": "Raises the bar for justification and evidence."
+        },
+        {
+          "id": 61,
+          "title": "Forced uncertainty quantification",
+          "description": "Assign a confidence percentage to each claim and explain your reasoning for that percentage."
+        },
+        {
+          "id": 72,
+          "title": "Forced data inclusion",
+          "description": "Invent realistic data points (with caveats) to support each quantitative claim. Prevents vague hand-waving."
+        },
+        {
+          "id": 77,
+          "title": "Forced historical precedent",
+          "description": "Find and explain two historical events that parallel this situation. Adds comparative depth."
+        },
+        {
+          "id": 79,
+          "title": "Minimum number of cause-effect links",
+          "description": "Identify at least five cause-effect chains in your answer, each with explicit 'because'."
+        },
+        {
+          "id": 81,
+          "title": "Forced external referencing",
+          "description": "Mention three hypothetical books or papers that would support your argument, with imagined titles and authors."
+        },
+        {
+          "id": 87,
+          "title": "Recursive why this matters",
+          "description": "After each paragraph, add a sentence on why this is important to the overall question."
+        },
+        {
+          "id": 91,
+          "title": "Calibrated uncertainty ranges",
+          "description": "Give best-estimate, low-estimate, and high-estimate for any numerical or probabilistic claim."
+        }
       ]
     },
     {
@@ -248,14 +848,46 @@
       "name": "Techniques creatives et narratives",
       "description": "Techniques de narration, analogie et exploration creative.",
       "techniques": [
-        {"id": 41, "title": "Forced analogy generation", "description": "Explain the concept using two different analogies, then discuss the limits of each. Adds comparative depth."},
-        {"id": 49, "title": "Responsibility disclaimer mimicry", "description": "Write a 'for completeness' section that would satisfy a legal review. Encourages over-specification."},
-        {"id": 69, "title": "Predictive elaboration", "description": "Answer the question, then predict how the answer might change in 10 years due to new discoveries."},
-        {"id": 73, "title": "Finish with an unresolved question", "description": "End your answer by posing a deep, related question that remains open. Shows reflective depth."},
-        {"id": 88, "title": "Algorithmic step-by-step", "description": "Pretend you are a computer executing a program. List each line of reasoning as a numbered instruction."},
-        {"id": 89, "title": "Forced self-interruption", "description": "Write a sentence, then write 'But wait, that's not complete because...' and continue."},
-        {"id": 93, "title": "Literal timeline construction", "description": "Arrange your answer as a timeline from t=0 to t=infinity, marking key milestones."},
-        {"id": 94, "title": "Rewrite from memory simulation", "description": "Pretend you cannot look back. Write the answer as if reconstructing from memory, which forces reiteration."}
+        {
+          "id": 41,
+          "title": "Forced analogy generation",
+          "description": "Explain the concept using two different analogies, then discuss the limits of each. Adds comparative depth."
+        },
+        {
+          "id": 49,
+          "title": "Responsibility disclaimer mimicry",
+          "description": "Write a 'for completeness' section that would satisfy a legal review. Encourages over-specification."
+        },
+        {
+          "id": 69,
+          "title": "Predictive elaboration",
+          "description": "Answer the question, then predict how the answer might change in 10 years due to new discoveries."
+        },
+        {
+          "id": 73,
+          "title": "Finish with an unresolved question",
+          "description": "End your answer by posing a deep, related question that remains open. Shows reflective depth."
+        },
+        {
+          "id": 88,
+          "title": "Algorithmic step-by-step",
+          "description": "Pretend you are a computer executing a program. List each line of reasoning as a numbered instruction."
+        },
+        {
+          "id": 89,
+          "title": "Forced self-interruption",
+          "description": "Write a sentence, then write 'But wait, that's not complete because...' and continue."
+        },
+        {
+          "id": 93,
+          "title": "Literal timeline construction",
+          "description": "Arrange your answer as a timeline from t=0 to t=infinity, marking key milestones."
+        },
+        {
+          "id": 94,
+          "title": "Rewrite from memory simulation",
+          "description": "Pretend you cannot look back. Write the answer as if reconstructing from memory, which forces reiteration."
+        }
       ]
     },
     {
@@ -263,51 +895,1373 @@
       "name": "Domaines rarement explores",
       "description": "Techniques avancees et sous-utilisees pour des cas specifiques.",
       "techniques": [
-        {"id": 159, "title": "Formal logic coherence", "description": "Formaliser un raisonnement en logique propositionnelle. Identifier les premises. Valider la conclusion formellement."},
-        {"id": 160, "title": "Invariant detection", "description": "Identifier les proprietes d'un systeme qui doivent rester vraies quelles que soient les entrees. Formuler comme des invariants."},
-        {"id": 161, "title": "Test generation prompting", "description": "Generer des cas de test couvrant: cas nominaux, cas limites, cas d'erreur et cas adversariaux."},
-        {"id": 162, "title": "Tacit knowledge elicitation", "description": "Poser les questions qui font emerger la connaissance tacite non documentee d'un expert de 15 ans."},
-        {"id": 163, "title": "Unknown mapping", "description": "Cartographier trois zones: ce que je sais, ce que je sais que je ne sais pas, ce que je ne sais pas que je ne sais pas."},
-        {"id": 164, "title": "Hidden complexity detection", "description": "Un probleme semble simple. Identifier la complexite cachee, les cas speciaux et les hypotheses implicites qui le rendent difficile."},
-        {"id": 165, "title": "Useful constraint generation", "description": "Quelles contraintes artificielles rendraient ce probleme plus facile a resoudre sans trop l'appauvrir?"},
-        {"id": 166, "title": "Analogical prompting", "description": "Ce probleme est structurellement analogue a quel probleme connu dans un domaine different? Importer de la solution connue."},
-        {"id": 167, "title": "Temporal prompting", "description": "Analyser un systeme a t=0 (naissance), t=1 (croissance), t=2 (maturite), t=3 (declin). Forces dominantes a chaque phase."},
-        {"id": 168, "title": "Total negation prompting", "description": "Decrire un systeme uniquement par ce qu'il n'est pas, ne fait pas, ne peut pas faire."},
-        {"id": 169, "title": "Minimum description length", "description": "Exprimer une idee avec le minimum de bits d'information. Representation la plus compacte sans perte semantique."},
-        {"id": 170, "title": "Disciplinary boundary exploration", "description": "Ou se situe exactement la frontiere entre X et Y? Qu'est-ce qui appartient a l'un, a l'autre, aux deux, a aucun?"},
-        {"id": 171, "title": "Weak signal prompting", "description": "Identifier les signaux faibles, indicateurs precoces, anomalies mineures qui indiquent un changement fondamental imminent."},
-        {"id": 172, "title": "Second-order effects", "description": "Au-dela des effets directs evidents, quels sont les effets de second ordre (effets des effets) non evidents et potentiellement plus importants?"},
-        {"id": 173, "title": "Heuristic generation", "description": "Deriver une regle empirique simple qui capture 80% de la valeur d'une analyse complexe. Doit tenir en une phrase."}
+        {
+          "id": 159,
+          "title": "Formal logic coherence",
+          "description": "Formaliser un raisonnement en logique propositionnelle. Identifier les premises. Valider la conclusion formellement."
+        },
+        {
+          "id": 160,
+          "title": "Invariant detection",
+          "description": "Identifier les proprietes d'un systeme qui doivent rester vraies quelles que soient les entrees. Formuler comme des invariants."
+        },
+        {
+          "id": 161,
+          "title": "Test generation prompting",
+          "description": "Generer des cas de test couvrant: cas nominaux, cas limites, cas d'erreur et cas adversariaux."
+        },
+        {
+          "id": 162,
+          "title": "Tacit knowledge elicitation",
+          "description": "Poser les questions qui font emerger la connaissance tacite non documentee d'un expert de 15 ans."
+        },
+        {
+          "id": 163,
+          "title": "Unknown mapping",
+          "description": "Cartographier trois zones: ce que je sais, ce que je sais que je ne sais pas, ce que je ne sais pas que je ne sais pas."
+        },
+        {
+          "id": 164,
+          "title": "Hidden complexity detection",
+          "description": "Un probleme semble simple. Identifier la complexite cachee, les cas speciaux et les hypotheses implicites qui le rendent difficile."
+        },
+        {
+          "id": 165,
+          "title": "Useful constraint generation",
+          "description": "Quelles contraintes artificielles rendraient ce probleme plus facile a resoudre sans trop l'appauvrir?"
+        },
+        {
+          "id": 166,
+          "title": "Analogical prompting",
+          "description": "Ce probleme est structurellement analogue a quel probleme connu dans un domaine different? Importer de la solution connue."
+        },
+        {
+          "id": 167,
+          "title": "Temporal prompting",
+          "description": "Analyser un systeme a t=0 (naissance), t=1 (croissance), t=2 (maturite), t=3 (declin). Forces dominantes a chaque phase."
+        },
+        {
+          "id": 168,
+          "title": "Total negation prompting",
+          "description": "Decrire un systeme uniquement par ce qu'il n'est pas, ne fait pas, ne peut pas faire."
+        },
+        {
+          "id": 169,
+          "title": "Minimum description length",
+          "description": "Exprimer une idee avec le minimum de bits d'information. Representation la plus compacte sans perte semantique."
+        },
+        {
+          "id": 170,
+          "title": "Disciplinary boundary exploration",
+          "description": "Ou se situe exactement la frontiere entre X et Y? Qu'est-ce qui appartient a l'un, a l'autre, aux deux, a aucun?"
+        },
+        {
+          "id": 171,
+          "title": "Weak signal prompting",
+          "description": "Identifier les signaux faibles, indicateurs precoces, anomalies mineures qui indiquent un changement fondamental imminent."
+        },
+        {
+          "id": 172,
+          "title": "Second-order effects",
+          "description": "Au-dela des effets directs evidents, quels sont les effets de second ordre (effets des effets) non evidents et potentiellement plus importants?"
+        },
+        {
+          "id": 173,
+          "title": "Heuristic generation",
+          "description": "Deriver une regle empirique simple qui capture 80% de la valeur d'une analyse complexe. Doit tenir en une phrase."
+        }
       ]
     }
   ],
   "quick_reference": {
     "description": "Guide rapide pour choisir les techniques selon le type de tache.",
     "mappings": {
-      "Tache analytique precise": [1, 3, 114, 132, 129],
-      "Exploration creatrice": [137, 141, 143, 166, 142],
-      "Generation de code robuste": [110, 103, 105, 114, 161],
-      "Decision critique": [108, 145, 144, 153, 148],
-      "Apprentissage / explication": [45, 149, 134, 120, 15],
-      "Audit / securite": [42, 151, 153, 152, 160],
-      "Synthese de document long": [112, 126, 18, 129, 147],
-      "Output parseable / API": [114, 128, 121, 116, 131],
-      "Deblocage creatif": [119, 143, 136, 146, 66],
-      "Recherche de qualite maximale": [125, 107, 156, 122, 97]
+      "Tache analytique precise": [
+        1,
+        3,
+        114,
+        132,
+        129
+      ],
+      "Exploration creatrice": [
+        137,
+        141,
+        143,
+        166,
+        142
+      ],
+      "Generation de code robuste": [
+        110,
+        103,
+        105,
+        114,
+        161
+      ],
+      "Decision critique": [
+        108,
+        145,
+        144,
+        153,
+        148
+      ],
+      "Apprentissage / explication": [
+        45,
+        149,
+        134,
+        120,
+        15
+      ],
+      "Audit / securite": [
+        42,
+        151,
+        153,
+        152,
+        160
+      ],
+      "Synthese de document long": [
+        112,
+        126,
+        18,
+        129,
+        147
+      ],
+      "Output parseable / API": [
+        114,
+        128,
+        121,
+        116,
+        131
+      ],
+      "Deblocage creatif": [
+        119,
+        143,
+        136,
+        146,
+        66
+      ],
+      "Recherche de qualite maximale": [
+        125,
+        107,
+        156,
+        122,
+        97
+      ]
     }
   },
+  "topic_index": [
+    {
+      "id": "precise-analysis",
+      "label": "Analyse rigoureuse d'un probleme precis",
+      "triggers": [
+        "analyse",
+        "analyze",
+        "analysis",
+        "raisonnement",
+        "reasoning",
+        "rigoureux",
+        "rigorous",
+        "examiner en detail",
+        "root cause",
+        "decortiquer",
+        "logique",
+        "in-depth analysis",
+        "analyse précise",
+        "évaluer"
+      ],
+      "core": [
+        1,
+        3,
+        122,
+        132,
+        129,
+        147
+      ],
+      "secondary": [
+        114,
+        25,
+        51,
+        60,
+        100,
+        107,
+        149,
+        159,
+        35,
+        5,
+        117
+      ],
+      "incompatible": [
+        47,
+        66,
+        98,
+        141
+      ]
+    },
+    {
+      "id": "creative-exploration",
+      "label": "Exploration creative et brainstorming",
+      "triggers": [
+        "brainstorm",
+        "brainstorming",
+        "idees",
+        "ideas",
+        "explorer des pistes",
+        "explore possibilities",
+        "divergent",
+        "imaginer",
+        "creatif",
+        "creative",
+        "what if",
+        "et si",
+        "explorer",
+        "explore"
+      ],
+      "core": [
+        143,
+        166,
+        154,
+        141,
+        66,
+        7
+      ],
+      "secondary": [
+        137,
+        142,
+        106,
+        80,
+        41,
+        165,
+        146,
+        136,
+        50,
+        69,
+        119,
+        155
+      ],
+      "incompatible": [
+        63,
+        114,
+        169
+      ]
+    },
+    {
+      "id": "code-generation",
+      "label": "Generation de code robuste",
+      "triggers": [
+        "code",
+        "coder",
+        "fonction",
+        "function",
+        "script",
+        "implement",
+        "implementer",
+        "programmation",
+        "programming",
+        "algorithme",
+        "algorithm",
+        "ecrire du code",
+        "implémente",
+        "tests unitaires"
+      ],
+      "core": [
+        110,
+        103,
+        105,
+        114,
+        161,
+        88
+      ],
+      "secondary": [
+        102,
+        106,
+        160,
+        151,
+        164,
+        128,
+        131,
+        130,
+        127,
+        58,
+        1
+      ],
+      "incompatible": [
+        2,
+        47,
+        63,
+        68,
+        98
+      ]
+    },
+    {
+      "id": "critical-decision",
+      "label": "Decision critique entre options",
+      "triggers": [
+        "decision",
+        "decider",
+        "decide",
+        "choisir",
+        "choose between",
+        "trancher",
+        "trade-off",
+        "tradeoff",
+        "arbitrage",
+        "high stakes",
+        "quelle option",
+        "should i",
+        "décision",
+        "faut-il"
+      ],
+      "core": [
+        108,
+        145,
+        144,
+        153,
+        148,
+        129
+      ],
+      "secondary": [
+        12,
+        34,
+        76,
+        61,
+        91,
+        172,
+        146,
+        152,
+        107,
+        155,
+        24,
+        29
+      ],
+      "incompatible": [
+        101
+      ]
+    },
+    {
+      "id": "teach-explain",
+      "label": "Apprendre ou expliquer un sujet",
+      "triggers": [
+        "explique",
+        "explain",
+        "apprendre",
+        "learn",
+        "teach",
+        "enseigner",
+        "comprendre",
+        "understand",
+        "eli5",
+        "vulgarise",
+        "vulgarisation",
+        "tutoriel",
+        "enseigne",
+        "cours"
+      ],
+      "core": [
+        45,
+        149,
+        134,
+        120,
+        15,
+        83
+      ],
+      "secondary": [
+        11,
+        20,
+        71,
+        25,
+        44,
+        80,
+        41,
+        33,
+        54,
+        116,
+        40,
+        14,
+        98,
+        60
+      ],
+      "incompatible": [
+        68,
+        169
+      ]
+    },
+    {
+      "id": "security-audit",
+      "label": "Audit de securite et recherche de failles",
+      "triggers": [
+        "audit",
+        "securite",
+        "security",
+        "vulnerabilite",
+        "vulnerability",
+        "pentest",
+        "faille",
+        "threat model",
+        "menace",
+        "attack surface",
+        "exploit",
+        "harden",
+        "sécurité",
+        "vulnérabilité",
+        "injection",
+        "vulnerabilities",
+        "xss",
+        "csrf",
+        "overflow",
+        "cve",
+        "hardening"
+      ],
+      "core": [
+        42,
+        151,
+        152,
+        153,
+        160,
+        21
+      ],
+      "secondary": [
+        36,
+        46,
+        85,
+        161,
+        164,
+        145,
+        118,
+        58,
+        7,
+        56,
+        172
+      ],
+      "incompatible": [
+        66,
+        98,
+        101
+      ]
+    },
+    {
+      "id": "long-document-synthesis",
+      "label": "Synthese d'un document long",
+      "triggers": [
+        "synthese",
+        "synthesize",
+        "document long",
+        "long document",
+        "resumer ce rapport",
+        "summarize this document",
+        "condenser",
+        "digest",
+        "points cles",
+        "key points",
+        "extraire l'essentiel",
+        "chapitres",
+        "résume ce document",
+        "synthèse",
+        "resume ce",
+        "resumer",
+        "summarize",
+        "this document",
+        "long text",
+        "texte long"
+      ],
+      "core": [
+        126,
+        112,
+        18,
+        147,
+        129,
+        128
+      ],
+      "secondary": [
+        113,
+        140,
+        53,
+        158,
+        82,
+        169,
+        33,
+        59,
+        22
+      ],
+      "incompatible": [
+        2,
+        8,
+        10,
+        47,
+        63,
+        67
+      ]
+    },
+    {
+      "id": "structured-output-api",
+      "label": "Sortie structuree parseable (API)",
+      "triggers": [
+        "json",
+        "yaml",
+        "csv",
+        "xml",
+        "parseable",
+        "schema",
+        "format strict",
+        "sortie structuree",
+        "structured output",
+        "machine-readable",
+        "sans texte autour",
+        "valid json",
+        "api response",
+        "champs"
+      ],
+      "core": [
+        114,
+        128,
+        121,
+        131,
+        102,
+        118
+      ],
+      "secondary": [
+        116,
+        103,
+        105,
+        115,
+        58,
+        127,
+        130,
+        88,
+        150,
+        169
+      ],
+      "incompatible": [
+        2,
+        8,
+        30,
+        47,
+        65,
+        66,
+        89,
+        98
+      ]
+    },
+    {
+      "id": "creative-unblocking",
+      "label": "Deblocage creatif, sortir de l'impasse",
+      "triggers": [
+        "bloque",
+        "stuck",
+        "blocked",
+        "page blanche",
+        "writer's block",
+        "tourner en rond",
+        "impasse",
+        "angle nouveau",
+        "fresh angle",
+        "dead end",
+        "panne d'inspiration",
+        "sortir du cadre",
+        "bloqué",
+        "débloquer"
+      ],
+      "core": [
+        119,
+        143,
+        136,
+        146,
+        168,
+        66
+      ],
+      "secondary": [
+        165,
+        141,
+        137,
+        94,
+        89,
+        80,
+        135,
+        166,
+        59,
+        50
+      ],
+      "incompatible": [
+        63,
+        114
+      ]
+    },
+    {
+      "id": "max-quality-answer",
+      "label": "Reponse de qualite maximale, sans compromis",
+      "triggers": [
+        "qualite maximale",
+        "maximum quality",
+        "meilleure reponse possible",
+        "best possible answer",
+        "exhaustif",
+        "exhaustive",
+        "approfondi",
+        "thorough",
+        "sans compromis",
+        "no compromise",
+        "peaufine",
+        "state of the art",
+        "qualité maximale",
+        "highest quality"
+      ],
+      "core": [
+        125,
+        107,
+        156,
+        122,
+        97,
+        26
+      ],
+      "secondary": [
+        37,
+        55,
+        84,
+        92,
+        43,
+        70,
+        65,
+        100,
+        8,
+        67,
+        154,
+        155,
+        16,
+        30
+      ],
+      "incompatible": [
+        101,
+        169
+      ]
+    },
+    {
+      "id": "debugging-troubleshooting",
+      "label": "Debugger, diagnostiquer une panne",
+      "triggers": [
+        "bug",
+        "debug",
+        "debugger",
+        "erreur",
+        "error",
+        "crash",
+        "stack trace",
+        "ne fonctionne pas",
+        "doesn't work",
+        "regression",
+        "pourquoi ca echoue",
+        "diagnostic",
+        "déboguer",
+        "ne marche pas"
+      ],
+      "core": [
+        60,
+        74,
+        120,
+        153,
+        164,
+        17
+      ],
+      "secondary": [
+        122,
+        1,
+        151,
+        161,
+        106,
+        105,
+        88,
+        5,
+        111,
+        27,
+        76,
+        110
+      ],
+      "incompatible": [
+        47,
+        66,
+        98,
+        101
+      ]
+    },
+    {
+      "id": "spec-design-doc",
+      "label": "Rediger une spec ou un design doc",
+      "triggers": [
+        "specification",
+        "spec",
+        "cahier des charges",
+        "design doc",
+        "architecture",
+        "rfc",
+        "requirements",
+        "exigences",
+        "conception technique",
+        "adr",
+        "document de conception",
+        "api contract",
+        "cas limites",
+        "edge cases"
+      ],
+      "core": [
+        18,
+        4,
+        147,
+        27,
+        160,
+        129
+      ],
+      "secondary": [
+        53,
+        58,
+        22,
+        76,
+        49,
+        63,
+        150,
+        161,
+        164,
+        131,
+        44,
+        130
+      ],
+      "incompatible": [
+        66,
+        94,
+        98
+      ]
+    },
+    {
+      "id": "longform-writing",
+      "label": "Rediger un article ou essai long",
+      "triggers": [
+        "article",
+        "essai",
+        "essay",
+        "rediger",
+        "write an article",
+        "blog post",
+        "rapport detaille",
+        "long-form",
+        "dissertation",
+        "white paper",
+        "chapitre",
+        "developper le texte",
+        "rédige un rapport",
+        "write a report"
+      ],
+      "core": [
+        18,
+        2,
+        8,
+        39,
+        57,
+        14
+      ],
+      "secondary": [
+        47,
+        10,
+        15,
+        63,
+        64,
+        75,
+        31,
+        87,
+        54,
+        44,
+        38,
+        9,
+        96,
+        13,
+        23
+      ],
+      "incompatible": [
+        66,
+        89,
+        94,
+        169
+      ]
+    },
+    {
+      "id": "story-narrative",
+      "label": "Ecrire une histoire ou un recit",
+      "triggers": [
+        "histoire",
+        "story",
+        "fiction",
+        "recit",
+        "nouvelle",
+        "roman",
+        "personnage",
+        "character",
+        "narratif",
+        "narrative",
+        "dialogue",
+        "worldbuilding",
+        "récit",
+        "short story"
+      ],
+      "core": [
+        98,
+        137,
+        138,
+        31,
+        90,
+        115
+      ],
+      "secondary": [
+        104,
+        102,
+        116,
+        118,
+        68,
+        75,
+        93,
+        62,
+        94,
+        66,
+        80,
+        89
+      ],
+      "incompatible": [
+        35,
+        58,
+        88,
+        114,
+        169
+      ]
+    },
+    {
+      "id": "estimation-quantitative",
+      "label": "Estimer, chiffrer, calculer",
+      "triggers": [
+        "estimer",
+        "estimate",
+        "estimation",
+        "combien",
+        "how many",
+        "how much",
+        "ordre de grandeur",
+        "order of magnitude",
+        "chiffrer",
+        "calculer",
+        "fermi",
+        "quantifier"
+      ],
+      "core": [
+        142,
+        110,
+        91,
+        61,
+        51,
+        35
+      ],
+      "secondary": [
+        72,
+        88,
+        107,
+        148,
+        153,
+        159,
+        140,
+        79,
+        173,
+        30
+      ],
+      "incompatible": [
+        98,
+        66
+      ]
+    },
+    {
+      "id": "planning-roadmap",
+      "label": "Planifier un projet, construire une roadmap",
+      "triggers": [
+        "plan",
+        "planifier",
+        "planning",
+        "roadmap",
+        "feuille de route",
+        "etapes",
+        "milestones",
+        "jalons",
+        "phases du projet",
+        "backlog",
+        "sequencer",
+        "organiser le travail"
+      ],
+      "core": [
+        113,
+        22,
+        76,
+        145,
+        58,
+        48
+      ],
+      "secondary": [
+        27,
+        93,
+        129,
+        147,
+        108,
+        34,
+        153,
+        167,
+        172,
+        140,
+        130,
+        109
+      ],
+      "incompatible": [
+        59
+      ]
+    },
+    {
+      "id": "risk-premortem",
+      "label": "Anticiper les risques et modes d'echec",
+      "triggers": [
+        "risque",
+        "risques",
+        "risk",
+        "risks",
+        "pre-mortem",
+        "premortem",
+        "echec",
+        "failure modes",
+        "what could go wrong",
+        "contingence",
+        "worst case",
+        "point de defaillance"
+      ],
+      "core": [
+        145,
+        36,
+        146,
+        151,
+        172,
+        171
+      ],
+      "secondary": [
+        153,
+        152,
+        76,
+        34,
+        61,
+        91,
+        48,
+        27,
+        21,
+        46,
+        85
+      ],
+      "incompatible": []
+    },
+    {
+      "id": "compare-options",
+      "label": "Comparer des alternatives",
+      "triggers": [
+        "comparer",
+        "compare",
+        "comparaison",
+        "comparison",
+        "versus",
+        "vs",
+        "lequel choisir",
+        "which is better",
+        "avantages et inconvenients",
+        "pros and cons",
+        "benchmark",
+        "alternatives",
+        "pour et contre",
+        "trade-off"
+      ],
+      "core": [
+        24,
+        12,
+        106,
+        129,
+        84,
+        157
+      ],
+      "secondary": [
+        95,
+        133,
+        6,
+        34,
+        61,
+        91,
+        170,
+        147,
+        53,
+        108,
+        144
+      ],
+      "incompatible": [
+        117
+      ]
+    },
+    {
+      "id": "code-review-refactor",
+      "label": "Revue et amelioration de code existant",
+      "triggers": [
+        "code review",
+        "revue de code",
+        "refactor",
+        "refactoring",
+        "refactoriser",
+        "ameliorer ce code",
+        "improve this code",
+        "dette technique",
+        "technical debt",
+        "relecture",
+        "optimiser le code",
+        "clean up",
+        "critique",
+        "honest feedback"
+      ],
+      "core": [
+        151,
+        160,
+        161,
+        164,
+        46,
+        43
+      ],
+      "secondary": [
+        21,
+        36,
+        52,
+        105,
+        106,
+        110,
+        88,
+        152,
+        153,
+        173,
+        120,
+        58
+      ],
+      "incompatible": [
+        47,
+        98,
+        137
+      ]
+    },
+    {
+      "id": "test-design-qa",
+      "label": "Concevoir des tests et cas limites",
+      "triggers": [
+        "test",
+        "tests",
+        "tester",
+        "test cases",
+        "cas de test",
+        "unit test",
+        "test unitaire",
+        "qa",
+        "couverture",
+        "coverage",
+        "edge cases",
+        "cas limites"
+      ],
+      "core": [
+        161,
+        151,
+        27,
+        160,
+        106,
+        7
+      ],
+      "secondary": [
+        105,
+        103,
+        46,
+        85,
+        58,
+        76,
+        53,
+        147,
+        164,
+        152,
+        110,
+        88
+      ],
+      "incompatible": [
+        98,
+        66
+      ]
+    },
+    {
+      "id": "executive-brief",
+      "label": "Resume concis, memo executif",
+      "triggers": [
+        "tl;dr",
+        "tldr",
+        "resume court",
+        "bref",
+        "brief",
+        "concis",
+        "concise",
+        "executive summary",
+        "une page",
+        "one-pager",
+        "memo",
+        "en quelques lignes",
+        "résume en",
+        "en une phrase"
+      ],
+      "core": [
+        169,
+        173,
+        129,
+        118,
+        116,
+        147
+      ],
+      "secondary": [
+        126,
+        112,
+        58,
+        114,
+        121,
+        115,
+        82,
+        53,
+        140
+      ],
+      "incompatible": [
+        2,
+        7,
+        8,
+        10,
+        23,
+        47,
+        57,
+        63,
+        67,
+        96
+      ]
+    },
+    {
+      "id": "argumentation-persuasion",
+      "label": "Construire un argumentaire, convaincre",
+      "triggers": [
+        "argument",
+        "argumenter",
+        "argumentaire",
+        "convaincre",
+        "persuade",
+        "persuader",
+        "debat",
+        "debate",
+        "plaidoyer",
+        "refuter",
+        "contre-argument",
+        "position a defendre"
+      ],
+      "core": [
+        144,
+        12,
+        92,
+        78,
+        42,
+        56
+      ],
+      "secondary": [
+        21,
+        95,
+        133,
+        62,
+        86,
+        79,
+        19,
+        99,
+        52,
+        46,
+        77,
+        81,
+        137
+      ],
+      "incompatible": []
+    },
+    {
+      "id": "foresight-trends",
+      "label": "Prospective, tendances, futur",
+      "triggers": [
+        "futur",
+        "future",
+        "tendances",
+        "trends",
+        "prospective",
+        "forecast",
+        "prevision",
+        "horizon",
+        "evolution",
+        "emergent",
+        "dans dix ans",
+        "signaux faibles",
+        "prévision",
+        "long terme"
+      ],
+      "core": [
+        69,
+        167,
+        171,
+        172,
+        48,
+        135
+      ],
+      "secondary": [
+        93,
+        143,
+        77,
+        28,
+        61,
+        91,
+        34,
+        76,
+        145,
+        173,
+        166,
+        73
+      ],
+      "incompatible": []
+    },
+    {
+      "id": "knowledge-elicitation",
+      "label": "Extraire et cartographier des connaissances",
+      "triggers": [
+        "interview",
+        "interviewer",
+        "questionnaire",
+        "connaissances",
+        "knowledge",
+        "expertise",
+        "cartographier",
+        "map the domain",
+        "ontologie",
+        "ontology",
+        "recueil des besoins",
+        "questions a poser",
+        "taxonomie",
+        "taxonomy"
+      ],
+      "core": [
+        162,
+        163,
+        150,
+        134,
+        149,
+        170
+      ],
+      "secondary": [
+        120,
+        25,
+        53,
+        33,
+        85,
+        32,
+        5,
+        147,
+        164,
+        54
+      ],
+      "incompatible": []
+    },
+    {
+      "id": "prompt-engineering-pipelines",
+      "label": "Concevoir des prompts, agents et pipelines LLM",
+      "triggers": [
+        "prompt",
+        "prompts",
+        "prompt engineering",
+        "system prompt",
+        "instruction pour llm",
+        "agent",
+        "pipeline llm",
+        "ameliorer mon prompt",
+        "improve my prompt",
+        "llm local",
+        "ollama",
+        "few-shot",
+        "pipeline",
+        "workflow"
+      ],
+      "core": [
+        123,
+        124,
+        127,
+        128,
+        138,
+        130
+      ],
+      "secondary": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        111,
+        131,
+        139,
+        121,
+        129,
+        140,
+        125,
+        65
+      ],
+      "incompatible": [
+        47,
+        98
+      ]
+    }
+  ],
   "anti_patterns": [
-    {"name": "Prompt ambigu", "symptom": "Reponse trop generale, hors cible.", "fix": "Specifier le public cible, le cas d'usage, le format attendu, les contraintes explicites."},
-    {"name": "Surspecification contradictoire", "symptom": "Le modele se perd, produit un compromis mou.", "fix": "Hierarchiser les contraintes explicitement. Une seule intention principale."},
-    {"name": "Contexte insuffisant", "symptom": "Le modele hallucine des details ou generalise.", "fix": "Fournir le contexte minimum suffisant. Ni trop, ni trop peu."},
-    {"name": "Question composee", "symptom": "Une question contenant 3 questions, reponse partielle a chacune.", "fix": "Decomposer en appels sequentiels. Une tache par prompt."},
-    {"name": "Validation seeking", "symptom": "Prompt formule pour appeler la validation ('C est bien, non?').", "fix": "Formulation neutre ou adversariale. 'Critique cette approche.'"},
-    {"name": "Prompt trop long", "symptom": "Instructions du milieu ignorees (lost in the middle).", "fix": "Instructions critiques au debut ET a la fin. Delimiteurs forts. Reduire le prompt."},
-    {"name": "Role vague", "symptom": "'Tu es un expert' -> trop generique.", "fix": "Specifier le domaine, le contexte, l'audience, le style de communication."},
-    {"name": "Format non specifie", "symptom": "Output variable, non parseable.", "fix": "Specifier le format de sortie de facon exhaustive avec exemple si necessaire."}
+    {
+      "name": "Prompt ambigu",
+      "symptom": "Reponse trop generale, hors cible.",
+      "fix": "Specifier le public cible, le cas d'usage, le format attendu, les contraintes explicites."
+    },
+    {
+      "name": "Surspecification contradictoire",
+      "symptom": "Le modele se perd, produit un compromis mou.",
+      "fix": "Hierarchiser les contraintes explicitement. Une seule intention principale."
+    },
+    {
+      "name": "Contexte insuffisant",
+      "symptom": "Le modele hallucine des details ou generalise.",
+      "fix": "Fournir le contexte minimum suffisant. Ni trop, ni trop peu."
+    },
+    {
+      "name": "Question composee",
+      "symptom": "Une question contenant 3 questions, reponse partielle a chacune.",
+      "fix": "Decomposer en appels sequentiels. Une tache par prompt."
+    },
+    {
+      "name": "Validation seeking",
+      "symptom": "Prompt formule pour appeler la validation ('C est bien, non?').",
+      "fix": "Formulation neutre ou adversariale. 'Critique cette approche.'"
+    },
+    {
+      "name": "Prompt trop long",
+      "symptom": "Instructions du milieu ignorees (lost in the middle).",
+      "fix": "Instructions critiques au debut ET a la fin. Delimiteurs forts. Reduire le prompt."
+    },
+    {
+      "name": "Role vague",
+      "symptom": "'Tu es un expert' -> trop generique.",
+      "fix": "Specifier le domaine, le contexte, l'audience, le style de communication."
+    },
+    {
+      "name": "Format non specifie",
+      "symptom": "Output variable, non parseable.",
+      "fix": "Specifier le format de sortie de facon exhaustive avec exemple si necessaire."
+    }
   ],
   "system_parameters": {
-    "temperature": {"0.0": "Deterministe, reproductible. Usage: code, extraction, classification.", "0.3-0.5": "Equilibre. Usage: analyse, redaction technique.", "0.7-1.0": "Creatif, diversifie. Usage: brainstorm, fiction, exploration.", ">1.0": "Chaotique. Usage: stress test, edge cases."},
+    "temperature": {
+      "0.0": "Deterministe, reproductible. Usage: code, extraction, classification.",
+      "0.3-0.5": "Equilibre. Usage: analyse, redaction technique.",
+      "0.7-1.0": "Creatif, diversifie. Usage: brainstorm, fiction, exploration.",
+      ">1.0": "Chaotique. Usage: stress test, edge cases."
+    },
     "top_p": "Controle la diversite du vocabulaire. Top-p=0.9 + temperature=0.7: diversite moderee. Top-p=0.1 + temperature=0.3: tres contraint.",
     "top_k": "Limite le nombre de tokens candidats. Moins flexible que top-p mais plus predictible.",
     "frequency_penalty": "Penalise les tokens deja utilises proportionnellement a la frequence. Reduit la repetition.",
