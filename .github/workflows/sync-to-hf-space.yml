@@ -1,0 +1,40 @@
+name: Sync hf-space branch to Hugging Face Space
+
+on:
+  push:
+    branches:
+      - hf-space
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: hf-space
+
+      # Requires two one-time setup steps on your end before this job can
+      # succeed (neither can be done from here):
+      #   1. Create the Space at https://huggingface.co/new-space, SDK =
+      #      Gradio, under whichever account/name you want — update
+      #      HF_SPACE_URL below to match exactly.
+      #   2. Generate a Hugging Face token with write access
+      #      (https://huggingface.co/settings/tokens) and add it as a
+      #      repo secret named HF_TOKEN (Settings -> Secrets and
+      #      variables -> Actions).
+      # This mirrors hf-space's HEAD onto the Space (force push, since the
+      # Space's git history is unrelated) — same "single source of truth,
+      # branch always wins" model as the official huggingface/hub-sync
+      # action, just via plain git instead of the `hf` CLI.
+      - name: Push to Hugging Face Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE_URL: https://huggingface.co/spaces/Ellana42/wild-root-prompt
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "::error::HF_TOKEN secret is not set — see the setup steps in this workflow's comments."
+            exit 1
+          fi
+          remote_url="$(echo "$HF_SPACE_URL" | sed "s#https://#https://Ellana42:${HF_TOKEN}@#")"
+          git remote add space "$remote_url" 2>/dev/null || git remote set-url space "$remote_url"
+          git push --force space HEAD:main
