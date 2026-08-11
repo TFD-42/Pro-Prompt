@@ -251,7 +251,7 @@ input:checked + .slider:before { transform: translateX(18px); }
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="logo">Wild_Root<span>_Prompt</span></div>
-    <div class="tagline">Local AI Prompt Enhancement &nbsp;·&nbsp; v2.3</div>
+    <div class="tagline">Local AI Prompt Enhancement &nbsp;·&nbsp; v2.4</div>
   </div>
 
   <div class="sidebar-body">
@@ -1167,7 +1167,9 @@ def run_web_server(port: int = 7860, open_browser: bool = True):
         threading.Thread(target=_open, daemon=True).start()
 
     try:
-        app.run(host="127.0.0.1", port=port, debug=False, threaded=True, use_reloader=False)
+        import os as _os
+        host = "0.0.0.0" if _os.environ.get("PORT") else "127.0.0.1"
+        app.run(host=host, port=port, debug=False, threaded=True, use_reloader=False)
     except OSError as e:
         print(f"\n  [ERROR] Could not start server on port {port}: {e}")
         print(f"  Try:  python prompt_expert_enhance.py web --port 7861")
